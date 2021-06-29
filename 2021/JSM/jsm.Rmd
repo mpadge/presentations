@@ -1,0 +1,1288 @@
+---
+title: "Automated Assessment<br>and Standards Alignment<br>of R Packages"
+author: "Mark Padgham & Noam Ross<br>rOpenSci & EcoHealth Alliance<br>Münster, Germany & New York, USA"
+output:
+      xaringan::moon_reader:
+            lib_dir: libs
+            css: xaringan-themer.css
+            self_contained: true
+            mathjax: null
+            nature:
+                  highlightStyle: github
+                  highlightLines: true
+                  countIncrementalSlides: false
+---
+
+```{r xaringan, include = FALSE}
+library(xaringanthemer)
+source ("myxaringantheme.R")
+```
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)# suppress version num in subdir name
+
+knitr::opts_chunk$set(cache = TRUE,
+                      collapse = TRUE,
+                      warning = FALSE)
+                      #message = FALSE)
+library (autotest)
+if (packageVersion ("autotest") < '0.0.2.81')
+    stop ("autotest package is not at latest version")
+```
+
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# rOpenSci: Transforming science through open data, software & reproducibility
+
+"*We help develop R packages for the sciences via community driven learning,
+review and maintenance of contributed software in the R ecosystem*"
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# rOpenSci & Software Peer Review
+
+"packages contributed by the community undergo a transparent, constructive, non
+adversarial and open review process."
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# rOpenSci & Software Peer Review: Why?
+
+- Feedback & improved software quality
+- Support from rOpenSci
+- Promotion of your software
+- Cross-linking with other software
+- Publications
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# rOpenSci & Software Peer Review: Scope
+
+Current scope includes software for:
+
+.left-column[
+
+- data retrieval
+- data extraction
+- data munging
+- data deposition
+- data validation and testing
+- workflow automation
+- version control
+- citation management and bibliometrics
+
+]
+
+.right-column[
+
+- scientific software wrappers
+- field and laboratory reproducibility tools
+- database software bindings
+- geospatial data
+- text analysis
+
+  ]
+
+---
+class: center, top
+background-image: url(img/SloanLogo-1B-SMALL-Gold-Blue.png)
+background-size: contain
+background-position: 50% 50%
+
+--
+
+# Expanding Software Peer Review
+
+--
+
+.fontBIG[ Expand Scope<br>to include<br>Statistical Software ]
+
+---
+class: center, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# Expanding Software Peer Review
+
+.fontBIG[ Expand Scope<br>to include<br>Statistical Software ]
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# Statistical Software Peer Review
+
+## What is statistical software?
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# Statistical Software Peer Review
+
+## What is statistical software?
+
+### Methodology:
+
+- Empirical collation of abstracts from:
+
+    - JSM conferences
+    - *Journal of Statistical Software*
+    - *Journal of Open Source Software*
+
+- Identify key statistical terms and represent as relational network
+
+- Analyse network structure & identify distinct clusters
+
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# Statistical Software Peer Review
+
+## What is statistical software?
+
+### Results:
+
+
+.left-column[
+
+- Bayesian and Monte Carlo
+- Regression and Supervised Learning
+- Dimensionality Reduction, Clustering, and Unsupervised Learning
+- Exploratory Data Analysis (EDA) and Summary Statistics
+
+]
+
+.right-column[
+
+
+- Time Series Analyses
+- Machine Learning
+- Spatial Analyses
+- ~~Wrapper Packages~~
+- ~~Network Analysis~~
+- ~~Probability Distributions~~
+- ~~Workflow Support~~
+
+]
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# Statistical Software Peer Review
+
+## Our approach
+
+- General and category-specific standards
+
+- Standards compliance documented within code
+
+- Automated assessment tools
+
+--
+
+plus (not covered in this talk) ...
+
+- Modular system for adaptation to other standards
+
+- Graded assessment
+
+- Dynamic compliance against evolving standards
+
+
+
+---
+class: left, top
+background-image: url(img/package-flow.png)
+background-size: contain
+background-position: 50% 50%
+
+---
+class: center, middle, inverse
+
+# autotest
+
+## github.com/ropensci-review-tools
+
+## search: "ropensci autotest"
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'autotest' package: Why?
+
+## rOpenSci Software Peer Review
+
+- A peer-review system integrating practices from software development and academic publishing
+
+- 7 years experience, hundreds of packages, authors and reviewers
+
+- Designed to improve software and expand a community of practices, via transparent, constructive, non-adversarial and open review
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'autotest' package: Why?
+
+## rOpenSci Software Peer Review
+
+- Reviewers often the first "external" users of submitted packages
+
+- Quickly uncover bugs, distracting reviews from higher-level focus on software quality
+
+- A tool to help uncover bugs prior to submission should increase software quality
+
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'autotest' package: How?
+
+
+- A form of "mutation testing"
+
+- Extracts documented example code to identify all inputs to, and outputs from,
+  all functions
+
+- Mutates those inputs
+
+- Also matches input and output types to descriptions
+
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'autotest' package
+
+1/3: Set up a package to test:
+
+```{r mkpkg-fakey, echo = TRUE, eval = FALSE}
+path <- file.path (tempdir (), "demo")
+usethis::create_package (path)
+
+fs::dir_tree (path)
+```
+```{r mkpkg-tree, echo = FALSE, eval = TRUE, output = FALSE, message = FALSE}
+wd <- getwd ()
+path <- file.path (tempdir (), "demo")
+x <- capture.output (usethis::create_package (path))
+fs::dir_tree (path)
+setwd (wd) # usethis changes wd
+```
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'autotest' package
+
+2/3: Add a function:
+
+```{r first-fn-write, echo = FALSE, message = FALSE, output = FALSE, eval = TRUE}
+path <- file.path (here::here (), "2021", "JSM", "demo")
+code <- c ("#' my_function",
+           "#'",
+           "#' @param x An input",
+           "#' @return Something else",
+           "#' @export",
+           "my_function <- function (x) {",
+           "  return (x + 1)",
+           "}")
+writeLines (code, file.path (path, "R", "myfn.R"))
+x <- capture.output (roxygen2::roxygenise (path))
+```
+
+```{r first-fn, eval = FALSE}
+#' my_function
+#'
+#' @param x An input
+#' @return Something else
+#' @export
+my_function <- function (x) {
+  return (x + 1)
+}
+```
+
+- save to `./R/myfn.R`
+
+- run `roxygen::roxygenise()` to create documentation (`/man`) file
+
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'autotest' package
+
+3/3: `autotest` it:
+
+```{r autotest0-fakey, eval = FALSE}
+library (autotest)
+a <- autotest_package (path, test = TRUE)
+```
+```{r autotest0, eval = TRUE, echo = FALSE, collapse = TRUE}
+library (autotest)
+path <- file.path (here::here (), "2021", "JSM", "demo")
+a1 <- autotest_package (path, test = TRUE)
+```
+
+```{r fakey-class, eval = FALSE}
+class (a)
+```
+```{r fakey-out-class, eval = TRUE, echo = FALSE, collapse = TRUE}
+c ("autotest_package",
+   "tbl_df",
+   "tbl",
+   "data.frame")
+```
+
+```{r fakey-dim, eval = FALSE}
+dim (a)
+```
+```{r fakey-out-dim, eval = TRUE, echo = FALSE, collapse = TRUE}
+c (1, 9)
+```
+
+
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'autotest' package
+
+3/3: `autotest` it:
+
+```{r autotest0-cp-fakey, eval = FALSE}
+library (autotest)
+a <- autotest_package (path, test = TRUE)
+print (a)
+```
+```{r autotest0-cp, eval = TRUE, echo = FALSE, collapse = TRUE}
+library (autotest)
+#path <- file.path (here::here (), "2021", "JSM", "demo")
+#a1 <- autotest_package (path, test = TRUE)
+a1 <- data.frame (type = "warning",
+                  test_name ="fn_without_example",
+                  fn_name = "my_function",
+                  parameter = NA_character_,
+                  parameter_type = NA_character_,
+                  operation = "Identify functions without documented examples",
+                  content ="This function has no documented example",
+                  test = TRUE,
+                  yaml_hash = NA_character_)
+as.data.frame (a1)
+```
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'autotest' package
+
+3/3: `autotest` it:
+
+```{r autotest1-fakey2, eval = FALSE}
+library (autotest)
+a <- autotest_package (path, test = TRUE)
+a$content
+```
+```{r autotest1, eval = TRUE, echo = FALSE, collapse = TRUE}
+library (autotest)
+#a1 <- autotest_package (path, test = TRUE)
+a1$content
+```
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'autotest' package
+
+```{r fn1-repeat, eval = FALSE}
+#' my_function
+#'
+#' @param x An input
+#' @return Something else
+#' @export
+my_function <- function (x) {
+  return (x + 1)
+}
+```
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'autotest' package
+
+```{r fn-write2, echo = FALSE, message = FALSE, output = FALSE, eval = TRUE}
+code <- c ("#' my_function",
+           "#'",
+           "#' @param x An input",
+           "#' @return Something else",
+           "#' @export",
+           "#' @examples",
+           "#' y <- my_function (x = 1)",
+           "my_function <- function (x) {",
+           "  return (x + 1)",
+           "}")
+writeLines (code, file.path (path, "R", "myfn.R"))
+x <- capture.output (roxygen2::roxygenise (path))
+```
+
+```{r fn2, eval = FALSE}
+#' my_function
+#'
+#' @param x An input
+#' @return Something else
+#' @export
+#' @examples
+#' y <- my_function (x = 1)
+my_function <- function (x) {
+  return (x + 1)
+}
+```
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'autotest' package
+
+```{r autotest1-fakey3, eval = FALSE}
+library (autotest)
+a <- autotest_package (path, test = TRUE)
+```
+```{r at2-output, echo = FALSE, collapse = TRUE}
+cli::cli_h3("autotesting demo")
+cli::cli_alert_success ("[1 / 1]: myfunction")
+```
+```{r a-content2, eval = FALSE}
+a$content
+```
+
+```{r autotest2, eval = TRUE, echo = FALSE, collapse = TRUE}
+#library (autotest)
+#path <- file.path (here::here (), "demo")
+#a1 <- autotest_package (path, test = TRUE)
+#print (a1$content, width = 30)
+
+message ("[1] Parameter [x] is not specified as integer, yet\n",
+         "    only used as such; please use '1L' for integer,\n",
+         "    or 1.0 for non-integer values.")
+message ("[2] Parameter [x] of function [my_function] is only used\n",
+         "    as a single numeric value, but responds to vectors of\n",
+         "    length > 1")
+```
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'autotest' package
+
+```{r fn2-cp, eval = FALSE}
+#' my_function
+#'
+#' @param x An input
+#' @return Something else
+#' @export
+#' @examples
+#' y <- my_function (x = 1)
+my_function <- function (x) {
+  return (x + 1)
+}
+```
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'autotest' package
+
+```{r fn-write3, echo = FALSE, message = FALSE, output = FALSE, eval = TRUE}
+code <- c ("#' my_function",
+           "#'",
+           "#' @param x An input",
+           "#' @return Something else",
+           "#' @export",
+           "#' @examples",
+           "#' y <- my_function (x = 1L)",
+           "my_function <- function (x) {",
+           "  checkmate::assertInt (x)",
+           "  return (x + 1)",
+           "}")
+writeLines (code, file.path (path, "R", "myfn.R"))
+x <- capture.output (roxygen2::roxygenise (path))
+```
+
+```{r fn3, eval = FALSE}
+#' my_function
+#'
+#' @param x An input
+#' @return Something else
+#' @export
+#' @examples
+#' y <- my_function (x = 1L)
+my_function <- function (x) {
+  checkmate::assertInt (x)
+  return (x + 1)
+}
+```
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'autotest' package
+
+```{r autotest-fakey3, eval = FALSE, collapse = TRUE}
+library (autotest)
+a <- autotest_package (path, test = TRUE)
+```
+```{r at3-output, echo = FALSE, collapse = TRUE}
+cli::cli_h3("autotesting demo")
+cli::cli_alert_success ("[1 / 1]: myfunction")
+```
+```{r at3-content, eval = FALSE}
+a$content
+```
+```{r autotest3, eval = TRUE, echo = FALSE, collapse = TRUE}
+message ("[1] Parameter [x] permits unrestricted integer inputs,\n",
+         "    yet does not document this; please add 'unrestricted'\n",
+         "    to parameter description.")
+```
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'autotest' package
+
+```{r fn3-cp, eval = FALSE}
+#' my_function
+#'
+#' @param x An input
+#' @return Something else
+#' @export
+#' @examples
+#' y <- my_function (x = 1L)
+my_function <- function (x) {
+  checkmate::assertInt (x)
+  return (x + 1)
+}
+```
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'autotest' package
+
+```{r fn-write4, echo = FALSE, message = FALSE, output = FALSE, eval = TRUE}
+code <- c ("#' my_function",
+           "#'",
+           "#' @param x An unrestricted integer input",
+           "#' @return Something else",
+           "#' @export",
+           "#' @examples",
+           "#' y <- my_function (x = 1L)",
+           "my_function <- function (x) {",
+           "  checkmate::assertInt (x)",
+           "  return (x + 1)",
+           "}")
+writeLines (code, file.path (path, "R", "myfn.R"))
+x <- capture.output (roxygen2::roxygenise (path))
+```
+
+```{r fn4, eval = FALSE}
+#' my_function
+#'
+#' @param x An unrestricted integer input
+#' @return Something else
+#' @export
+#' @examples
+#' y <- my_function (x = 1L)
+my_function <- function (x) {
+  checkmate::assertInt (x)
+  return (x + 1)
+}
+```
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'autotest' package
+
+```{r autotest-fakey4, eval = FALSE, collapse = TRUE}
+library (autotest)
+a <- autotest_package (path, test = TRUE)
+```
+```{r at4-output, echo = FALSE, collapse = TRUE}
+cli::cli_h3("autotesting demo")
+cli::cli_alert_success ("[1 / 1]: myfunction")
+a <- NULL
+```
+```{r at4-content, eval = TRUE}
+a
+```
+
+--
+
+### When `autotest` works, it should do nothing!
+
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'autotest' package
+
+## Which tests are run? `test = FALSE`
+
+```{r autotest-fakey5, eval = FALSE, collapse = TRUE}
+a <- autotest_package (path, test = FALSE)
+a
+```
+```{r tmp, eval = FALSE, echo = TRUE}
+if (!file.exists ("data/at5.Rds")) {
+    a <- autotest_package (path, test = FALSE)
+    saveRDS (a, "data/at5.Rds")
+}
+```
+```{r at5-out, echo = FALSE}
+readRDS ("data/at5.Rds")
+```
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'autotest' package
+
+## Which tests are run? `test = FALSE`
+
+```{r autotest-fakey6, eval = FALSE, collapse = TRUE}
+a <- autotest_package (path, test = FALSE)
+a$test_name
+```
+
+```{r at6-output, echo = FALSE, collapse = TRUE}
+a <- list (test_name = c ("int_range",
+                          "int_as_numeric",
+                          "single_par_as_length_2",
+                          "return_successful",
+                          "return_val_described",
+                          "return_desc_includes_class",
+                          "return_class_matches_desc",
+                          "par_is_documented",
+                          "par_matches_docs"))
+a$test_name
+```
+
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'autotest' package
+
+## Which tests are run? `test = FALSE`
+
+```{r fn4-rep, eval = FALSE}
+#' my_function
+#'
+#' @param x An unrestricted integer input
+#' @return Something else
+#' @export
+#' @examples
+#' y <- my_function (x = 1L)
+my_function <- function (x) {
+  checkmate::assertInt (x)
+  return (x + 1)
+}
+```
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'autotest' package
+
+## Which tests are run? `test = FALSE`
+
+```{r fn-write5, echo = FALSE, message = FALSE, output = FALSE, eval = TRUE}
+code <- c ("#' my_function",
+           "#'",
+           "#' @param x An unrestricted integer input",
+           "#' @return Something else",
+           "#' @export",
+           "#' @examples",
+           "#' y <- my_function (x = 1.)",
+           "my_function <- function (x) {",
+           "  checkmate::assertNumber (x)",
+           "  return (x + 1)",
+           "}")
+writeLines (code, file.path (path, "R", "myfn.R"))
+x <- capture.output (roxygen2::roxygenise (path))
+```
+
+```{r fn5, eval = FALSE}
+#' my_function
+#'
+#' @param x An unrestricted integer input
+#' @return Something else
+#' @export
+#' @examples
+#' y <- my_function (x = 1.)
+my_function <- function (x) {
+  checkmate::assertNumber (x)
+  return (x + 1)
+}
+```
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'autotest' package
+
+## Which tests are run? `test = FALSE`
+
+```{r autotest-fakey7, eval = FALSE, collapse = TRUE}
+a <- autotest_package (path, test = FALSE)
+a$test_name
+```
+
+```{r at7-output, echo = FALSE, collapse = TRUE}
+a <- list (test_name = c ("double_is_int",
+                          "trivial_noise",
+                          "single_par_as_length_2",
+                          "return_successful",
+                          "return_val_described",
+                          "return_desc_includes_class",
+                          "return_class_matches_desc",
+                          "par_is_documented",
+                          "par_matches_docs"))
+a$test_name
+```
+
+
+```{r cleanup, echo = FALSE}
+unlink (file.path (path, "man"), recursive = TRUE)
+f <- list.files (file.path (path, "R"),
+                 recursive = TRUE,
+                 full.names = TRUE)
+chk <- file.remove (f)
+```
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'autotest' package
+
+A real example: `autotest`ing the `stats` package
+
+```{r at-stats-first, eval = FALSE}
+a <- autotest_package (package = "stats",
+                       functions = "var",
+                       test = FALSE) # default
+```
+
+- `package` argument can be name of an installed package, or path to local source directory
+
+- `functions` argument can restrict tests to specified functions only
+
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'autotest' package
+
+A real example: `autotest`ing the `stats` package
+
+```{r at-stats, eval = FALSE}
+a <- autotest_package (package = "stats",
+                       functions = "var",
+                       test = FALSE) # default
+```
+```{r at-stats1-cli, echo = FALSE}
+cli::cli_h3 ("autotesting stats")
+cli::cli_alert_success ("[1 / 4]: var")
+cli::cli_alert_success ("[2 / 4]: cor")
+cli::cli_alert_success ("[3 / 4]: cov")
+cli::cli_alert_success ("[4 / 4]: cov")
+```
+```{r dima-F, eval = FALSE}
+dim (a)
+```
+```{r at-stats-save, echo = FALSE, eval = TRUE}
+if (!file.exists ("data/stats-var-FALSE.Rds")) {
+    a <- autotest_package (package = "stats",
+                           functions = "var",
+                           test = FALSE) # default
+    saveRDS (a, "data/stats-var-FALSE.Rds")
+}
+```
+```{r at-stats-dim, echo = FALSE, eval = TRUE}
+c (150, 9)
+```
+
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'autotest' package
+
+A real example: `autotest`ing the `stats` package
+
+```{r at-stats2, eval = FALSE}
+a <- autotest_package (package = "stats",
+                       functions = "var",
+                       test = TRUE) # takes 20-30 seconds
+```
+```{r at-stats2-cli, echo = FALSE}
+cli::cli_h3 ("autotesting stats")
+cli::cli_alert_success ("[1 / 4]: var")
+cli::cli_alert_success ("[2 / 4]: cor")
+cli::cli_alert_success ("[3 / 4]: cov")
+cli::cli_alert_success ("[4 / 4]: cov")
+```
+```{r dima-T, eval = FALSE}
+dim (a)
+```
+```{r at-stats-T-save, echo = FALSE, eval = TRUE}
+if (!file.exists ("data/stats-var-TRUE.Rds")) {
+    a <- autotest_package (package = "stats",
+                           functions = "var",
+                           test = TRUE) # takes 20-30 seconds
+    a <- a [order (a$test_name), ]
+    saveRDS (a, "data/stats-var-TRUE.Rds")
+}
+```
+```{r at-stats-T-dim, echo = FALSE, eval = TRUE}
+c (15, 9)
+```
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'autotest' package
+
+A real example: `autotest`ing the `stats` package
+
+```{r at-stats-T-out, echo = FALSE}
+a <- readRDS ("data/stats-var-TRUE.Rds")
+a
+```
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'autotest' package
+
+A real example: `autotest`ing the `stats` package
+
+- Use `DT` package to inspect results!
+
+
+```{r use-DT, eval = FALSE}
+a <- autotest_package (package = "stats",
+                       functions = "var",
+                       test = TRUE) # takes 20-30 seconds
+DT::datatable (a)
+```
+
+---
+class: left, top
+background-image: url(img/stats-var-TRUE.png)
+background-size: contain
+background-position: 50% 50%
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'autotest' package
+
+## Which tests are run? `test = FALSE`
+
+```{r autotest-stats-fakey-dim, eval = FALSE, collapse = TRUE}
+a <- autotest_package (package = "stats",
+                       functions = "var",
+                       test = FALSE)
+dim (a)
+```
+```{r at-stats-F-dim, echo = FALSE, eval = TRUE}
+c (150, 9)
+```
+```{r DT2, eval = FALSE}
+DT::datatable (a)
+```
+
+---
+class: left, top
+background-image: url(img/stats-var-FALSE1.png)
+background-size: contain
+background-position: 50% 50%
+
+---
+class: left, top
+background-image: url(img/stats-var-FALSE2.png)
+background-size: contain
+background-position: 50% 50%
+
+---
+class: left, top
+background-image: url(img/stats-var-FALSE3.png)
+background-size: contain
+background-position: 50% 50%
+
+---
+class: left, top
+background-image: url(img/stats-var-FALSE4.png)
+background-size: contain
+background-position: 50% 50%
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'autotest' package
+
+A real example: `autotest`ing the `stats` package
+
+```{r at-stats-5, eval = FALSE}
+a <- autotest_package (package = "stats",
+                       functions = "var",
+                       test = TRUE)
+```
+
+- `stats` package is algorithmially robust
+
+- But `autotest` reveals a few gaps in documentation!
+
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# Statistical Software Peer Review
+
+## Our approach
+
+- General and category-specific standards
+
+- Standards compliance documented within code
+
+- Automated assessment tools
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# Statistical Software Peer Review
+
+## Our approach
+
+- General and category-specific standards
+
+- Standards compliance documented within code
+
+- ~~Automated assessment tools~~
+
+---
+class: left, top
+background-image: url(img/package-flow.png)
+background-size: contain
+background-position: 50% 50%
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'srr' package
+
+## `srr` = "Software Review Roclets"
+
+- A "roclet" is a documentation engine ("doclet") for the **R** language.
+
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'srr' package: Why?
+
+- Software must comply with detailed, category-specific standards
+
+- `srr` allows standards compliance to be documented within the software itself
+
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'srr' package
+
+## documentation in R with 'roxygen2'
+
+```{r roxygen-ex}
+#' Function description
+#'
+#' @rdtitle NewFunction
+#' @param x First input
+#' @param y Second input
+#' @return Something different
+#' @export
+myfunction <- function (x, y) {
+    # ...
+}
+```
+
+--
+
+Run `roxygen2::roxygenise()` to turn that into `/man` file `NewFucntion.Rd`
+
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'srr' package
+
+## documentation in R with 'roxygen2'
+
+- `roxygen2` is extensible, and allows custom "roclets"
+
+- Everything following `@` is a "tag"
+
+- Each "roclet" has a generic `process` method, and an `output` method to
+  output information to the `.Rd` file
+
+- Tags with `output = NULL` do not appear in package documentation
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'srr' package
+
+- `srr` introduces 3 new tags for documenting standards:
+
+    - `@srrstats` for adherence to standards
+    - `@srrstatsNA` for non-applicable standards
+    - `@srrstatsTODO` for standards yet to be addressed
+
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'srr' package
+
+- The `srr_stats_roxygen()` function dumps full text of all standards in file
+  `R/srr-stats-standards.R`
+
+- All are initially tagged `@srrstatsTODO`
+
+- Standards are addressed by changing tag to `@srrstats` and moving to location
+  within code where standard is addressed
+
+- `srr_report()` function generates a `.html` report of standards compliance
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'srr' package
+
+```{r roxygen-ex-repeat}
+#' Function description
+#'
+#' @rdtitle NewFunction
+#' @param x First input
+#' @param y Second input
+#' @return Something different
+#' @export
+myfunction <- function (x, y) {
+    # ...
+}
+```
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'srr' package
+
+```{r roxygen-ex-srr}
+#' Function description
+#'
+#' @rdtitle NewFunction
+#' @param x First input
+#' @param y Second input
+#' @return Something different
+#' @export
+#'
+#' @srrstats {G1.1} This standard is addressed here through ...
+myfunction <- function (x, y) {
+    # ...
+}
+```
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'srr' package
+
+```{r roxygen-srr-demo, eval = FALSE}
+library (srr)
+path <- srr_stats_pkg_skeleton()
+roxygen2::roxygenise (path)
+```
+```{r roxygen-srr-demo-hidden, echo = FALSE, eval = TRUE, message = TRUE, output = FALSE}
+library (srr)
+path <- srr_stats_pkg_skeleton()
+x <- capture.output (
+    roxygen2::roxygenise (path)
+)
+```
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# Statistical Software Peer Review
+
+- Now accepting submissions
+
+- Use of `autotest` will enable reviews to better focus on substantive issues of software design and quality
+
+- `srr` provides a comprehensive method for documenting standards
+  compliance within code itself
+
+- Associated `html` reports facilitate rapid review of standards compliance
+
+- Result should be high quality statistical software with open and demonstrable compliance with standards
