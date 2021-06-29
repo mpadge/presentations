@@ -1,0 +1,434 @@
+---
+title: "rOpenSci's Assessment and standardisation of R packages for statistical analysis"
+subtitle: "PSI 2021 Online Conference"
+author: "Mark Padgham <br> rOpenSci & EcoHealth Alliance<br>Münster, Germany & New York, USA"
+output:
+      xaringan::moon_reader:
+            #yolo:
+            #            img: img/fortune-beach.png
+            #            times: 2
+            lib_dir: libs
+            css: xaringan-themer.css
+            self_contained: true
+            mathjax: null
+            nature:
+                  highlightStyle: github
+                  highlightLines: true
+                  countIncrementalSlides: false
+---
+
+```{r xaringan, include = FALSE}
+library(xaringanthemer)
+source ("myxaringantheme.R")
+```
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)# suppress version num in subdir name
+
+knitr::opts_chunk$set(cache = TRUE,
+                      warning = FALSE)
+                      #message = FALSE)
+```
+
+class: left, middle
+background-image: url(img/icon_lettering_color_large.png)
+background-size: contain
+background-position: 50% 50%
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# rOpenSci: Transforming science through open data, software & reproducibility
+
+"*We help develop R packages for the sciences via community driven learning,
+review and maintenance of contributed software in the R ecosystem*"
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# rOpenSci & Software Peer Review
+
+"packages contributed by the community undergo a transparent, constructive, non
+adversarial and open review process."
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# rOpenSci & Software Peer Review: Why?
+
+- Feedback & improved software quality
+- Support from rOpenSci
+- Promotion of your software
+- Cross-linking with other software
+- Publications
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# rOpenSci & Software Peer Review: Scope
+
+Current scope includes software for:
+
+- data retrieval
+- data extraction
+- data munging
+- data deposition
+- data validation and testing
+- workflow automation
+- version control
+- citation management and bibliometrics
+- scientific software wrappers
+- field and laboratory reproducibility tools
+- database software bindings
+- geospatial data
+- text analysis
+
+---
+class: left, top
+background-image: url(img/SloanLogo-1B-SMALL-Gold-Blue.png)
+background-size: contain
+background-position: 50% 50%
+
+--
+
+# Expanding Software Peer Review
+
+--
+
+# -> Expand Scope to include<br>Statistical Software
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# Expanding Software Peer Review
+
+# -> Expand Scope to include<br>Statistical Software
+
+--
+
+- Define what statistical software is
+
+- Write standards for how statistical software<br>should be developed
+
+- Assess software against those standards
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# ~~Expanding~~ Software Peer Review
+
+- ~250 packages reviewed
+
+--
+
+- Reviewers often the first external users of software
+
+- Reviewers commonly uncover unexpected behaviour in response to using software
+  in ways authors may not have anticipated
+
+- Discussions of such "unexpected behaviour" often divert reviews from more
+  substantive considerations of software design and quality
+
+--
+
+### Solution: Develop tool to help uncover "unexpected behaviour" prior to submission
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'autotest' package
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'autotest' package
+
+- A form of "mutation testing"
+
+- Identifies all inputs to all functions through extracting documented example
+  code
+
+- Mutates those inputs
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'autotest' package
+
+Tests include:
+
+- Ranges of single-valued numeric parameters
+
+- Lengths of vectors
+
+- Mutation of character-valued inputs
+
+- Mutation of class attributes
+
+- Mutation of column types in tabular inputs
+
+- Also matches input and output types to descriptions
+
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'autotest' package
+
+```{r autotest, eval = FALSE, echp = TRUE}
+library (autotest)
+system.time (
+    x <- autotest_package (package = "stats",
+                           functions = "var",
+                           test = TRUE)
+)
+```
+```{r save-autotest-results, echo = FALSE, eval = FALSE}
+saveRDS (x, "autotest-results-TRUE.Rds")
+saveRDS (x, "autotest-results-FALSE.Rds")
+```
+
+```{r autotest-output, eval = TRUE, echo = FALSE, message = TRUE, collapse = TRUE}
+cli::cli_h2 ("autotesting stats")
+message ("")
+cli::cli_alert_success ("[1 / 4]: var")
+cli::cli_alert_success ("[2 / 4]: cor")
+cli::cli_alert_success ("[3 / 4]: cov")
+cli::cli_alert_success ("[4 / 4]: cov")
+c (user = 22.26, system = 0.003, elapsed = 24.807)
+```
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'autotest' package
+
+```{r autotest-results, eval = TRUE, echo = FALSE, message = TRUE, collapse = TRUE}
+x <- readRDS ("autotest-results-TRUE.Rds")
+x <- x [order (x$type, decreasing = TRUE), ]
+index <- which (x$type == "diagnostic")
+x [index, ] <- x [index [order (x$test_name [index])], ]
+rownames (x) <- NULL
+#DT::datatable (x, options = list (pageLength = 100))
+print (x)
+```
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'autotest' package
+
+### `stats::var`
+
+- Conducts `r nrow (readRDS ("autotest-results-FALSE.Rds"))` tests on 4 functions (use `test = FALSE` to see)
+
+- Yields `r nrow (readRDS ("autotest-results-TRUE.Rds"))` notes
+
+- 2 warnings for parameters with no demonstrated usage
+
+Use throughout development should help to ensure consistent response to all
+parameters of all functions prior to submission
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# Expanding Software Peer Review
+
+- Software must adhere to detailed, category-specific standards
+
+- Adherence to standards is documented within the software itself
+
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# Software Review Roclets: The 'srr' package
+
+--
+
+## roxygen2
+
+```{r roxygen-ex}
+#' Function description
+#'
+#' @rdtitle NewFunction
+#' @param x First input
+#' @param y Second input
+#' @return Something different
+#' @export
+myfunction <- function (x, y) {
+    # ...
+}
+```
+
+--
+
+Run `roxygen2::roxygenise()` to turn that into `/man` file `NewFucntion.Rd`
+
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# Software Review Roclets: The 'srr' package
+
+- `roxygen2` is extensible, and allows custom "roclets"
+
+- Everything following `@` is a "tag"
+
+- Each "roclet" has a generic `process` method, and an `output` method to
+  output information to the `.Rd` file
+
+- `srr` introduces new tags for documenting standards:
+    - `@srrstats` for adherence to standards
+    - `@srrstatsNA` for non-applicable standards
+    - `@srrstatsTODO` for standards yet to be addressed
+
+- Running `roxygen2::roxygenise()` automatically generates a summary report of
+  standards compliance on screen
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'srr' package: How To
+
+- The `srr_stats_roxygen()` function dumps full text of all standards in file
+  `R/srr-stats-standards.R`
+
+- All are initially tagged `@srrstatsTODO`
+
+- Standards are addressed by changing tag to `@srrstats` and moving to location
+  within code where standard is addressed
+
+- `srr_report()` function generates a `.html` report of standards compliance
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# Software Review Roclets: The 'srr' package
+
+```{r roxygen-ex-repeat}
+#' Function description
+#'
+#' @rdtitle NewFunction
+#' @param x First input
+#' @param y Second input
+#' @return Something different
+#' @export
+myfunction <- function (x, y) {
+    # ...
+}
+```
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# Software Review Roclets: The 'srr' package
+
+```{r roxygen-ex-srr}
+#' Function description
+#'
+#' @rdtitle NewFunction
+#' @param x First input
+#' @param y Second input
+#' @return Something different
+#' @export
+#'
+#' @srrstats {G1.1} This standard is addressed here through ...
+myfunction <- function (x, y) {
+    # ...
+}
+```
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# Software Review Roclets: The 'srr' package
+
+```{r roxygen-srr-demo, eval = FALSE}
+library (srr)
+path <- srr_stats_pkg_skeleton()
+roxygen2::roxygenise (path)
+```
+```{r roxygen-srr-demo-hidden, echo = FALSE, eval = TRUE, message = TRUE, output = FALSE}
+library (srr)
+path <- srr_stats_pkg_skeleton()
+x <- capture.output (
+    roxygen2::roxygenise (path)
+)
+```
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# Statistical Software Peer Review
+
+- Now accepting submissions
+
+- Use of `autotest` will enable reviews to better focus on substantive issues of software design and quality
+
+- `srr` provides a comprehensive method for documenting standards
+  compliance within code itself
+
+- Associated `html` reports facilitate rapid review of standards compliance
+
+- Result should be high quality statistical software with open and demonstrable compliance with standards
