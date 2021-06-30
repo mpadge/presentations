@@ -257,6 +257,101 @@ background-position: 50% 50%
 
 ---
 class: left, top
+background-image: url(img/baRcodeR01.png)
+background-size: cover
+background-position: 50% 50%
+
+---
+class: left, top
+background-image: url(img/baRcodeR02.png)
+background-size: cover
+background-position: 50% 50%
+
+---
+class: left, top
+background-image: url(img/baRcodeR03.png)
+background-size: cover
+background-position: 50% 50%
+
+---
+class: left, top
+background-image: url(img/baRcodeR04.png)
+background-size: cover
+background-position: 50% 50%
+
+---
+class: left, top
+background-image: url(img/baRcodeR07.png)
+background-size: cover
+background-position: 50% 50%
+
+---
+class: left, top
+background-image: url(img/baRcodeR08.png)
+background-size: cover
+background-position: 50% 50%
+
+---
+class: left, top
+background-image: url(img/baRcodeR09.png)
+background-size: cover
+background-position: 50% 50%
+
+---
+class: left, top
+background-image: url(img/baRcodeR10.png)
+background-size: cover
+background-position: 50% 50%
+
+---
+class: left, top
+background-image: url(img/baRcodeR11.png)
+background-size: cover
+background-position: 50% 50%
+
+---
+class: left, top
+background-image: url(img/baRcodeR12.png)
+background-size: cover
+background-position: 50% 50%
+
+---
+class: left, top
+background-image: url(img/baRcodeR13.png)
+background-size: cover
+background-position: 50% 50%
+
+---
+class: left, top
+background-image: url(img/baRcodeR14.png)
+background-size: cover
+background-position: 50% 50%
+
+---
+class: left, top
+background-image: url(img/baRcodeR15.png)
+background-size: cover
+background-position: 50% 50%
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'autotest' package: Why?
+
+## rOpenSci Software Peer Review
+
+- Reviewers often the first "external" users of submitted packages
+
+- Quickly uncover bugs, distracting reviews from higher-level focus on software quality
+
+- A tool to help uncover bugs prior to submission should increase software quality
+
+
+---
+class: left, top
 background-image: url(img/icon_lettering_color_large-faded.png)
 background-size: contain
 background-position: 50% 50%
@@ -1177,18 +1272,6 @@ class: center, middle, inverse
 (A "roclet" is a documentation engine,<br>or "doclet", for the **R** language.)
 
 
----
-class: left, top
-background-image: url(img/icon_lettering_color_large-faded.png)
-background-size: contain
-background-position: 50% 50%
-
-# The 'srr' package: Why?
-
-- Software must comply with detailed, category-specific standards
-
-- `srr` allows standards compliance to be documented within the software itself
-
 
 ---
 class: left, top
@@ -1196,27 +1279,44 @@ background-image: url(img/icon_lettering_color_large-faded.png)
 background-size: contain
 background-position: 50% 50%
 
-# The 'srr' package
-
-## documentation in R with 'roxygen2'
+# The 'srr' package: How?
 
 ```{r roxygen-ex}
-#' Function description
+#' Function to add two numbers
 #'
-#' @rdtitle NewFunction
+#' @rdtitle Addtwo
 #' @param x First input
 #' @param y Second input
-#' @return Something different
+#' @return Sum of x and y
 #' @export
-myfunction <- function (x, y) {
-    # ...
+addtwo <- function (x, y) {
+    return (x + y)
 }
 ```
 
---
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
 
-Run `roxygen2::roxygenise()` to turn that into `/man` file `NewFucntion.Rd`
+# The 'srr' package: How?
 
+```{r roxygen-ex-repeat}
+#' Function to add two numbers
+#'
+#' @rdtitle Addtwo
+#' @param x First input
+#' @param y Second input
+#' @return Sum of x and y
+#' @export
+#'
+#' @srrstats {G1.1} Primary citation for this function follows
+#' @references Smith & Jones (2021) A new addition algorithm
+addtwo <- function (x, y) {
+    return (x + y)
+}
+```
 
 ---
 class: left, top
@@ -1224,30 +1324,9 @@ background-image: url(img/icon_lettering_color_large-faded.png)
 background-size: contain
 background-position: 50% 50%
 
-# The 'srr' package
+# The 'srr' package: How?
 
-## documentation in R with 'roxygen2'
-
-- `roxygen2` is extensible, and allows custom "roclets"
-
-- Everything following `@` is a "tag"
-
-- Each tag has a "roclet"
-
-- Each roclet has a generic `process` method, and an `output` method to
-  output information to the `.Rd` file
-
-- Tags with `output = NULL` do not appear in package documentation
-
----
-class: left, top
-background-image: url(img/icon_lettering_color_large-faded.png)
-background-size: contain
-background-position: 50% 50%
-
-# The 'srr' package
-
-- `srr` introduces 3 new tags for documenting standards:
+- `srr` introduces new tags for documenting standards:
 
     - `@srrstats` for adherence to standards
 
@@ -1255,6 +1334,9 @@ background-position: 50% 50%
 
     - `@srrstatsTODO` for standards yet to be addressed
 
+- Standard command to update package documentation automatically generates
+  a summary report of standards compliance on screen
+
 
 ---
 class: left, top
@@ -1262,9 +1344,30 @@ background-image: url(img/icon_lettering_color_large-faded.png)
 background-size: contain
 background-position: 50% 50%
 
-# The 'srr' package
+# The 'srr' package: How?
 
-- The `srr_stats_roxygen()` function dumps full text of all standards in file
+```{r roxygenise-demo1, eval = FALSE}
+roxygen2::roxygenise(path)
+```
+
+```{r roxygenise-demo1-output, echo = FALSE, message = TRUE, collapse = TRUE}
+cli::cli_alert_info ("Loading demo")
+cli::cli_h1 ("rOpenSci Statistical Software Standards")
+cli::cli_h3 ("@srrstats standards:")
+cli::cli_li ("[G1.1] in function 'addtwo()' on line#11 of file [R/test.R]")
+```
+
+
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'srr' package: How?
+
+- One function dumps full text of standards in file
   `R/srr-stats-standards.R`
 
 - All are initially tagged `@srrstatsTODO`
@@ -1272,71 +1375,24 @@ background-position: 50% 50%
 - Standards are addressed by changing tag to `@srrstats` and moving to location
   within code where standard is addressed
 
-- `srr_report()` function generates a `.html` report of standards compliance
-
 ---
 class: left, top
 background-image: url(img/icon_lettering_color_large-faded.png)
 background-size: contain
 background-position: 50% 50%
 
-# The 'srr' package
+# The 'srr' package: How?
 
-```{r roxygen-ex-repeat}
-#' Function description
-#'
-#' @rdtitle NewFunction
-#' @param x First input
-#' @param y Second input
-#' @return Something different
-#' @export
-myfunction <- function (x, y) {
-    # ...
-}
+In package directory:
+
+```{r srr-stats-roxy, eval = FALSE}
+srr_stats_roxygen (category = "ml")
 ```
-
----
-class: left, top
-background-image: url(img/icon_lettering_color_large-faded.png)
-background-size: contain
-background-position: 50% 50%
-
-# The 'srr' package
-
-```{r roxygen-ex-srr}
-#' Function description
-#'
-#' @rdtitle NewFunction
-#' @param x First input
-#' @param y Second input
-#' @return Something different
-#' @export
-#'
-#' @srrstats {G1.1} This standard is addressed here through ...
-myfunction <- function (x, y) {
-    # ...
-}
-```
-
----
-class: left, top
-background-image: url(img/icon_lettering_color_large-faded.png)
-background-size: contain
-background-position: 50% 50%
-
-# The 'srr' package
-
-```{r roxygen-srr-demo, eval = FALSE}
+```{r srr-stats-roxy-tmp, echo = FALSE, message = TRUE, collapse = TRUE}
 library (srr)
-path <- srr_stats_pkg_skeleton()
-roxygen2::roxygenise (path)
-```
-```{r roxygen-srr-demo-hidden, echo = FALSE, eval = TRUE, message = TRUE, output = FALSE}
-library (srr)
-path <- srr_stats_pkg_skeleton()
-x <- capture.output (
-    roxygen2::roxygenise (path)
-)
+d <- srr_stats_pkg_skeleton ()
+f <- file.path (d, "R", "srr-stats-standards.R")
+srr_stats_roxygen (category = "ml", filename = f, overwrite = TRUE)
 ```
 
 ---
@@ -1344,16 +1400,95 @@ class: left, top
 background-image: url(img/icon_lettering_color_large-faded.png)
 background-size: contain
 background-position: 50% 50%
+
+# The 'srr' package: How?
+
+```{r filepath, echo = FALSE}
+f <- file.path (d, "R", "srr-stats-standards.R")
+s <- readLines (f)
+```
+
+
+```{r srr-stats-roxy-ex, echo = FALSE, message = TRUE, collapse = TRUE}
+s [1:99]
+```
+
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'srr' package: How?
+
+
+```{r srr-stats-roxy-ex-short, echo = FALSE, message = TRUE, collapse = TRUE}
+s [1:14]
+```
+
+File has:
+
+- `r length (s)` lines
+- `r length(grep("^#' @srrstats", s))` standards
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'srr' package: How?
+
+- Insert standards into package with one line of code
+
+- Comply with standards
+
+- Update documentation to automatically generate compliance report
+
+- Generate hyperlinked `html` version with `srr_report()` function
+
+
+---
+class: left, top
+background-image: url(img/srr_report.png)
+background-size: cover
+background-position: 50% 50%
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'srr' package: How?
+
+- Insert standards into package with `srr_stats_roxygen()`
+
+- Comply with standards
+
+- Update documentation to automatically generate compliance report
+
+- Generate hyperlinked `html` version with `srr_report()` function
+
+- Also extensible, with alternative standards substituted by modifying a single
+  URL
+
+
+---
+class: left, top
+background-image: url(img/package-flow.png)
+background-size: contain
+background-position: 50% 50%
+
+
+---
+class: left, top, inverse
 
 # Statistical Software Peer Review
 
 - Now accepting submissions
 
-- Use of `autotest` will enable reviews to better focus on substantive issues of software design and quality
+- Search "rOpenSci statistical software"
 
-- `srr` provides a comprehensive method for documenting standards
-  compliance within code itself
-
-- Associated `html` reports facilitate rapid review of standards compliance
-
-- Result should be high quality statistical software with open and demonstrable compliance with standards
+- All tools available for use now at `github.com/ropensci-review-tools`
