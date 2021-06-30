@@ -713,7 +713,7 @@ background-position: 50% 50%
 a <- autotest_package (path, test = FALSE)
 a
 ```
-```{r tmp, eval = FALSE, echo = TRUE}
+```{r tmp, eval = TRUE, echo = FALSE}
 if (!file.exists ("data/at5.Rds")) {
     a <- autotest_package (path, test = FALSE)
     saveRDS (a, "data/at5.Rds")
