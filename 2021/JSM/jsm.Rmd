@@ -206,17 +206,6 @@ background-position: 50% 50%
 
 - Automated assessment tools
 
---
-
-plus (not covered in this talk) ...
-
-- Modular system for adaptation to other standards
-
-- Graded assessment
-
-- Dynamic compliance against evolving standards
-
-
 
 ---
 class: left, top
@@ -1092,10 +1081,65 @@ background-position: 50% 50%
 - ~~Automated assessment tools~~
 
 ---
+class: center, middle, inverse
+
+# Statistical Standards
+
+## Online Book Contains all General and Category-Specific Standards
+
+`stats-devguide.ropensci.org`
+
+---
 class: left, top
-background-image: url(img/package-flow.png)
+background-image: url(img/devguide-stds-G1.png)
 background-size: contain
 background-position: 50% 50%
+
+---
+class: left, top
+background-image: url(img/devguide-stds-G2.png)
+background-size: contain
+background-position: 50% 50%
+
+---
+class: left, top
+background-image: url(img/devguide-stds-G3.png)
+background-size: contain
+background-position: 50% 50%
+
+---
+class: left, top
+background-image: url(img/devguide-stds-G4.png)
+background-size: contain
+background-position: 50% 50%
+
+---
+class: left, top
+background-image: url(img/devguide-stds-BS1.png)
+background-size: contain
+background-position: 50% 50%
+
+---
+class: left, top
+background-image: url(img/devguide-stds-BS2.png)
+background-size: contain
+background-position: 50% 50%
+
+---
+class: left, top
+background-image: url(img/devguide-stds-BS3.png)
+background-size: contain
+background-position: 50% 50%
+
+---
+class: center, middle, inverse
+
+# Statistical Standards
+
+## 40 General Standards &<br>265 Category-Specific Standards<br>in 7 Categories
+
+## Four New Categories in Progress
+
 
 ---
 class: left, top
@@ -1103,11 +1147,34 @@ background-image: url(img/icon_lettering_color_large-faded.png)
 background-size: contain
 background-position: 50% 50%
 
+# Statistical Software Peer Review
+
+## Our approach
+
+- General and category-specific standards
+
+- Standards compliance documented within code
+
+- ~~Automated assessment tools~~
+
+---
+class: left, top
+background-image: url(img/package-flow.png)
+background-size: contain
+background-position: 50% 50%
+
+---
+class: center, middle, inverse
+
 # The 'srr' package
 
 ## `srr` = "Software Review Roclets"
 
-- A "roclet" is a documentation engine ("doclet") for the **R** language.
+## github.com/ropensci-review-tools
+
+## search: "ropensci srr"
+
+(A "roclet" is a documentation engine,<br>or "doclet", for the **R** language.)
 
 
 ---
@@ -1165,7 +1232,9 @@ background-position: 50% 50%
 
 - Everything following `@` is a "tag"
 
-- Each "roclet" has a generic `process` method, and an `output` method to
+- Each tag has a "roclet"
+
+- Each roclet has a generic `process` method, and an `output` method to
   output information to the `.Rd` file
 
 - Tags with `output = NULL` do not appear in package documentation
@@ -1181,7 +1250,9 @@ background-position: 50% 50%
 - `srr` introduces 3 new tags for documenting standards:
 
     - `@srrstats` for adherence to standards
+
     - `@srrstatsNA` for non-applicable standards
+
     - `@srrstatsTODO` for standards yet to be addressed
 
 
