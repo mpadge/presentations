@@ -51,19 +51,6 @@ background-position: 50% 50%
 "packages contributed by the community undergo a transparent, constructive, non
 adversarial and open review process."
 
----
-class: left, top
-background-image: url(img/icon_lettering_color_large-faded.png)
-background-size: contain
-background-position: 50% 50%
-
-# rOpenSci & Software Peer Review: Why?
-
-- Feedback & improved software quality
-- Support from rOpenSci
-- Promotion of your software
-- Cross-linking with other software
-- Publications
 
 ---
 class: left, top
@@ -109,16 +96,6 @@ background-position: 50% 50%
 # Expanding Software Peer Review
 
 --
-
-.fontBIG[ Expand Scope<br>to include<br>Statistical Software ]
-
----
-class: center, top
-background-image: url(img/icon_lettering_color_large-faded.png)
-background-size: contain
-background-position: 50% 50%
-
-# Expanding Software Peer Review
 
 .fontBIG[ Expand Scope<br>to include<br>Statistical Software ]
 
@@ -222,21 +199,6 @@ class: center, middle, inverse
 
 ## search: "ropensci autotest"
 
----
-class: left, top
-background-image: url(img/icon_lettering_color_large-faded.png)
-background-size: contain
-background-position: 50% 50%
-
-# The 'autotest' package: Why?
-
-## rOpenSci Software Peer Review
-
-- A peer-review system integrating practices from software development and academic publishing
-
-- 7 years experience, hundreds of packages, authors and reviewers
-
-- Designed to improve software and expand a community of practices, via transparent, constructive, non-adversarial and open review
 
 ---
 class: left, top
@@ -836,99 +798,6 @@ a$test_name
 ```
 
 
----
-class: left, top
-background-image: url(img/icon_lettering_color_large-faded.png)
-background-size: contain
-background-position: 50% 50%
-
-# The 'autotest' package
-
-## Which tests are run? `test = FALSE`
-
-```{r fn4-rep, eval = FALSE}
-#' my_function
-#'
-#' @param x An unrestricted integer input
-#' @return Something else
-#' @export
-#' @examples
-#' y <- my_function (x = 1L)
-my_function <- function (x) {
-  checkmate::assertInt (x)
-  return (x + 1)
-}
-```
-
----
-class: left, top
-background-image: url(img/icon_lettering_color_large-faded.png)
-background-size: contain
-background-position: 50% 50%
-
-# The 'autotest' package
-
-## Which tests are run? `test = FALSE`
-
-```{r fn-write5, echo = FALSE, message = FALSE, output = FALSE, eval = TRUE}
-code <- c ("#' my_function",
-           "#'",
-           "#' @param x An unrestricted integer input",
-           "#' @return Something else",
-           "#' @export",
-           "#' @examples",
-           "#' y <- my_function (x = 1.)",
-           "my_function <- function (x) {",
-           "  checkmate::assertNumber (x)",
-           "  return (x + 1)",
-           "}")
-writeLines (code, file.path (path, "R", "myfn.R"))
-x <- capture.output (roxygen2::roxygenise (path))
-```
-
-```{r fn5, eval = FALSE}
-#' my_function
-#'
-#' @param x An unrestricted integer input
-#' @return Something else
-#' @export
-#' @examples
-#' y <- my_function (x = 1.)
-my_function <- function (x) {
-  checkmate::assertNumber (x)
-  return (x + 1)
-}
-```
-
----
-class: left, top
-background-image: url(img/icon_lettering_color_large-faded.png)
-background-size: contain
-background-position: 50% 50%
-
-# The 'autotest' package
-
-## Which tests are run? `test = FALSE`
-
-```{r autotest-fakey7, eval = FALSE, collapse = TRUE}
-a <- autotest_package (path, test = FALSE)
-a$test_name
-```
-
-```{r at7-output, echo = FALSE, collapse = TRUE}
-a <- list (test_name = c ("double_is_int",
-                          "trivial_noise",
-                          "single_par_as_length_2",
-                          "return_successful",
-                          "return_val_described",
-                          "return_desc_includes_class",
-                          "return_class_matches_desc",
-                          "par_is_documented",
-                          "par_matches_docs"))
-a$test_name
-```
-
-
 ```{r cleanup, echo = FALSE}
 unlink (file.path (path, "man"), recursive = TRUE)
 f <- list.files (file.path (path, "R"),
@@ -936,6 +805,12 @@ f <- list.files (file.path (path, "R"),
                  full.names = TRUE)
 chk <- file.remove (f)
 ```
+
+---
+class: center, middle, inverse
+
+# autotesting a real package
+
 
 ---
 class: left, top
@@ -1083,53 +958,6 @@ background-position: 50% 50%
 
 # The 'autotest' package
 
-## Which tests are run? `test = FALSE`
-
-```{r autotest-stats-fakey-dim, eval = FALSE, collapse = TRUE}
-a <- autotest_package (package = "stats",
-                       functions = "var",
-                       test = FALSE)
-dim (a)
-```
-```{r at-stats-F-dim, echo = FALSE, eval = TRUE}
-c (150, 9)
-```
-```{r DT2, eval = FALSE}
-DT::datatable (a)
-```
-
----
-class: left, top
-background-image: url(img/stats-var-FALSE1.png)
-background-size: contain
-background-position: 50% 50%
-
----
-class: left, top
-background-image: url(img/stats-var-FALSE2.png)
-background-size: contain
-background-position: 50% 50%
-
----
-class: left, top
-background-image: url(img/stats-var-FALSE3.png)
-background-size: contain
-background-position: 50% 50%
-
----
-class: left, top
-background-image: url(img/stats-var-FALSE4.png)
-background-size: contain
-background-position: 50% 50%
-
----
-class: left, top
-background-image: url(img/icon_lettering_color_large-faded.png)
-background-size: contain
-background-position: 50% 50%
-
-# The 'autotest' package
-
 A real example: `autotest`ing the `stats` package
 
 ```{r at-stats-5, eval = FALSE}
@@ -1265,11 +1093,11 @@ class: center, middle, inverse
 
 ## `srr` = "Software Review Roclets"
 
+(A "roclet" is a documentation engine,<br>or "doclet", for the **R** language.)
+
 ## github.com/ropensci-review-tools
 
 ## search: "ropensci srr"
-
-(A "roclet" is a documentation engine,<br>or "doclet", for the **R** language.)
 
 
 
@@ -1311,7 +1139,7 @@ background-position: 50% 50%
 #' @return Sum of x and y
 #' @export
 #'
-#' @srrstats {G1.1} Primary citation for this function follows
+#' @srrstats {G1.0} Primary citation for this function follows
 #' @references Smith & Jones (2021) A new addition algorithm
 addtwo <- function (x, y) {
     return (x + y)
@@ -1354,7 +1182,7 @@ roxygen2::roxygenise(path)
 cli::cli_alert_info ("Loading demo")
 cli::cli_h1 ("rOpenSci Statistical Software Standards")
 cli::cli_h3 ("@srrstats standards:")
-cli::cli_li ("[G1.1] in function 'addtwo()' on line#11 of file [R/test.R]")
+cli::cli_li ("[G1.0] in function 'addtwo()' on line#11 of file [R/test.R]")
 ```
 
 
@@ -1483,7 +1311,7 @@ background-position: 50% 50%
 
 
 ---
-class: left, top, inverse
+class: left, middle, inverse
 
 # Statistical Software Peer Review
 
