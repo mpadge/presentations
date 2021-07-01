@@ -285,18 +285,6 @@ background-position: 50% 50%
 
 ---
 class: left, top
-background-image: url(img/baRcodeR14.png)
-background-size: cover
-background-position: 50% 50%
-
----
-class: left, top
-background-image: url(img/baRcodeR15.png)
-background-size: cover
-background-position: 50% 50%
-
----
-class: left, top
 background-image: url(img/icon_lettering_color_large-faded.png)
 background-size: contain
 background-position: 50% 50%
@@ -392,7 +380,7 @@ my_function <- function (x) {
 
 - save to `./R/myfn.R`
 
-- run `roxygen::roxygenise()` to create documentation (`/man`) file
+- run `roxygen2::roxygenise()` to create documentation (`/man`) file
 
 
 ---
@@ -415,22 +403,8 @@ path <- file.path (here::here (), "2021", "JSM", "demo")
 a1 <- autotest_package (path, test = TRUE)
 ```
 
-```{r fakey-class, eval = FALSE}
-class (a)
-```
-```{r fakey-out-class, eval = TRUE, echo = FALSE, collapse = TRUE}
-c ("autotest_package",
-   "tbl_df",
-   "tbl",
-   "data.frame")
-```
+- Returns a table with 1 row and 9 columns
 
-```{r fakey-dim, eval = FALSE}
-dim (a)
-```
-```{r fakey-out-dim, eval = TRUE, echo = FALSE, collapse = TRUE}
-c (1, 9)
-```
 
 
 
