@@ -1,0 +1,186 @@
+
+# Get ebird hotspot data for India
+
+```{r}
+library (rebird)
+# takes 6s or so
+system.time (
+    h <- ebirdhotspotlist (regionCode = "IN")
+)
+index <- which (!is.na (h$lat) &
+                !is.na (h$lng) &
+                !is.na (h$numSpeciesAllTime))
+h <- h [index, ]
+saveRDS (h, "hotspotsIN.Rds")
+```
+
+```{r}
+h <- readRDS ("hotspotsIN.Rds")
+library (dplyr)
+h <- group_by (h, lat, lng, locId) %>%
+    summarise (n = sum (numSpeciesAllTime),
+               .groups = "rowwise") %>%
+    rename (long = lng) %>%
+    relocate (locId, long, lat, n)
+h$count <- seq (nrow (h))
+```
+
+# Pre-process OSM data with osmium
+
+```{r}
+cmd <- "osmium tags-filter --overwrite -o india-hw.pbf india-latest.osm.pbf w/highway"           # nolint
+system (cmd)
+cmd <- paste0 ("osmium tags-filter --overwrite -o india-hw-filt.pbf ",
+               "india-latest.osm.pbf ",
+               "w/highway=primary,primary_link,secondary,secondary_link,",
+               "service,tertiary,tertiary_link,trunk,trunk_link")
+system (cmd)
+cmd <- "osmium tags-filter --overwrite -o india-nat.pbf india-latest.osm.pbf wr/natural"          # nolint
+system (cmd)
+cmd <- "osmium tags-filter --overwrite -o india-for.pbf india-latest.osm.pbf wr/landuse=forest"          # nolint
+system (cmd)
+```
+
+# Code to get polygons of natural areas
+
+This also merges all contiguous polygons. Currently works with the largest 500
+polygons only, not all quarter million or so.
+
+```{r}
+library (osmextract)
+library (osmdata)
+library (sf)
+x <- oe_read ("india-nat.pbf", layer = "multipolygons")
+x <- st_cast (x, "POLYGON")
+x$area <- sf::st_area (sf::st_transform (x, 3857))
+index <- order (x$area, decreasing = TRUE) [1:500]
+xtest <- x [index, ]
+y <- st_intersection (xtest)
+
+x0 <- y [y$n.overlaps == 1, ]
+x0$origins <- unlist (x0$origins)
+x1 <- y [y$n.overlaps > 1, ]
+x0 <- x0 [which (!x0$origins %in% unlist (x1$origins)), ]
+
+o <- x1$origins
+p <- lapply (o, function (i)
+             st_cast (st_union (xtest [i, ]),
+                      "POLYGON"))
+p <- do.call (c, p)
+g <- x0$geometry
+if (!is.null (p))
+    g <- c (g, p)
+g <- st_sf (geometry = st_sfc (g, crs = 4326))
+g$area <- sf::st_area (sf::st_transform (g$geometry, 3857))
+g$index <- seq (nrow (g))
+```
+
+# Code to get polygons of roadless areas
+
+This splits each natural polygon along any major roads, and calculates
+statistics of resultant polygons. The input, `p`, is one row of an `sf`
+"POLYGON" `data.frame` with an `index` column.
+
+```{r}
+roadless_area <- function (p) {
+
+    a_nat <- sf::st_area (sf::st_transform (p, 3857))
+
+    null_obj <- c (a_rd_med = a_nat,
+                   a_rd_max = a_nat,
+                   a_nat = a_nat)
+
+    f <- "polygon.poly"
+    write.table (st_coordinates (p) [, 1:2],
+                 file = f, sep = "    ",
+                 row.names = FALSE, col.names = FALSE)
+    x <- c ("polygon",
+            "first_polygon",
+            readLines (f),
+            "END",
+            "END")
+    writeLines (x, f)
+
+    f_hw <- sprintf ("data/india-hw%06d.osm", p$index)
+
+    if (!file.exists (f_hw)) {
+
+        cmd <- paste0 ("osmium extract -p polygon.poly india-hw-filt.pbf ",
+                       "--overwrite -o ", f_hw)
+        chk <- system (cmd, ignore.stdout = TRUE)
+        count <- 0
+        while (chk == 1 & count < 10) {
+            chk <- system (cmd, ignore.stdout = TRUE)
+            count <- count + 1
+        }
+    }
+
+    dat <- osmdata_sf (doc = f_hw, quiet = TRUE) %>%
+        osm_poly2line ()
+    xl <- dat$osm_lines # nolint
+
+    if (is.null (xl))
+        return (null_obj)
+
+    sp <- lwgeom::st_split (p, xl)
+    sp <- sf::st_collection_extract (sp, "POLYGON")
+
+    a <- sf::st_area (sf::st_transform (sp, 3857))
+
+    a_rd_med <- median (a)
+    a_rd_max <- max (a)
+
+    return (c (a_rd_med = a_rd_med,
+               a_rd_max = a_rd_max,
+               a_nat = a_nat))
+}
+```
+
+The actual calculation, and joining of these statistics with hotspot
+statistics, where the latter are associated with statistics of containing
+polygons.
+
+```{r}
+a <- pbapply::pblapply (seq (nrow (g)), function (i)
+                        roadless_area (g [i, ]))
+saveRDS (a, "a.Rds")
+```
+```{r}
+a <- do.call (rbind, readRDS ("a.Rds")) / 1e6
+#a <- roadless_area (g [5, ])
+g <- g [seq (nrow (a)), ]
+g <- cbind (g, a)
+```
+
+# Join polygon data to hotspot counts
+
+The final step here involves removing the few very largest polygons.
+
+```{r}
+xy <- st_sfc (st_multipoint (as.matrix (h [, 2:3])),
+              crs = 4326)
+xy <- st_sf (locId = h$locId,
+             n = h$n,
+             geometry = st_cast (xy, "POINT"))
+xy <- st_join (xy, g, join = st_within)
+xy <- na.omit (xy)
+
+index <- which (xy$a_nat < 4000)
+message ("Removing ", nrow (xy) - length (index), " / ", nrow (xy), " largest polygons")
+xy <- xy [index, ]
+```
+
+# Results
+
+
+```{r}
+library (ggplot2)
+ggplot (xy, aes (x = a_rd_max, y = n)) +
+    geom_point (pch = 19, col = "orange") +
+    geom_smooth (method = "loess", formula = "y ~ x")
+mod <- lm (n ~ a_nat + a_rd_med + a_rd_max, data = xy)
+summary (mod)
+mod <- lm (n ~ a_nat + a_rd_max, data = xy)
+summary (mod)
+```
+
