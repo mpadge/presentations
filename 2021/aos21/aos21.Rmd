@@ -1,0 +1,40 @@
+---
+title: "osmdata: roadless areas and avian diversity"
+author: "Mark Padgham <br>rOpenSci & EcoHealth Alliance<br>Münster, Germany & New York, USA"
+output:
+      xaringan::moon_reader:
+            lib_dir: libs
+            css: xaringan-themer.css
+            self_contained: true
+            mathjax: null
+            nature:
+                  highlightStyle: github
+                  highlightLines: true
+                  countIncrementalSlides: false
+---
+
+```{r xaringan, include = FALSE}
+library(xaringanthemer)
+source ("myxaringantheme.R")
+```
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)# suppress version num in subdir name
+
+knitr::opts_chunk$set(cache = TRUE,
+                      collapse = TRUE,
+                      warning = FALSE)
+                      #message = FALSE)
+library (autotest)
+if (packageVersion ("autotest") < '0.0.2.81')
+    stop ("autotest package is not at latest version")
+```
+
+class: center, middle
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# osmdata: roadless areas and avian diversity
+
+
