@@ -168,12 +168,14 @@ xy <- na.omit (xy)
 index <- which (xy$a_nat < 4000)
 message ("Removing ", nrow (xy) - length (index), " / ", nrow (xy), " largest polygons")
 xy <- xy [index, ]
+saveRDS (xy, "final-results.Rds")
 ```
 
 # Results
 
 
 ```{r}
+xy <- readRDS ("final-results.Rds")
 library (ggplot2)
 ggplot (xy, aes (x = a_rd_max, y = n)) +
     geom_point (pch = 19, col = "orange") +
