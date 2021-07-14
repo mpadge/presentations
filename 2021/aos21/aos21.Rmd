@@ -31,10 +31,52 @@ if (packageVersion ("autotest") < '0.0.2.81')
 ```
 
 class: center, middle
+background-image: url(img/icon_lettering_color_large.png)
+background-size: contain
+background-position: 50% 50%
+
+---
+class: center, top
 background-image: url(img/icon_lettering_color_large-faded.png)
 background-size: contain
 background-position: 50% 50%
 
 # osmdata: roadless areas and avian diversity
+
+
+---
+class: center, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# roadless areas and<br>avian diversity
+
+## osmdata
+
+## rebird
+
+## osmexract
+
+## auk
+
+
+---
+class: center, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# roadless areas and<br>avian diversity
+
+## Question: What is more important, sizes of natural or of roadless areas?
+
+---
+class: center, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# ~~roadless areas and~~<br>avian diversity
 
 
