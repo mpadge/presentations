@@ -30,13 +30,7 @@ if (packageVersion ("autotest") < '0.0.2.81')
     stop ("autotest package is not at latest version")
 ```
 
-class: center, middle
-background-image: url(img/icon_lettering_color_large.png)
-background-size: contain
-background-position: 50% 50%
-
----
-class: center, top
+class: left, top
 background-image: url(img/icon_lettering_color_large-faded.png)
 background-size: contain
 background-position: 50% 50%
@@ -45,7 +39,7 @@ background-position: 50% 50%
 
 
 ---
-class: center, top
+class: left, top
 background-image: url(img/icon_lettering_color_large-faded.png)
 background-size: contain
 background-position: 50% 50%
@@ -62,7 +56,7 @@ background-position: 50% 50%
 
 
 ---
-class: center, top
+class: left, top
 background-image: url(img/icon_lettering_color_large-faded.png)
 background-size: contain
 background-position: 50% 50%
@@ -72,11 +66,304 @@ background-position: 50% 50%
 ## Question: What is more important, sizes of natural or of roadless areas?
 
 ---
-class: center, top
+class: left, top
 background-image: url(img/icon_lettering_color_large-faded.png)
 background-size: contain
 background-position: 50% 50%
 
 # ~~roadless areas and~~<br>avian diversity
 
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# avian diversity
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# avian diversity
+
+- eBird database via `auk` or `rebird` packages
+
+- Examined diversity in India
+
+- Extracted total species counts over all time for all (14,958) hotspots
+
+```{r ebird, eval = FALSE}
+library (rebird)
+hotspot_data <- ebirdhotspotlist (regionCode = "IN")
+```
+```{r ebird-save-data, echo = FALSE, eval = !file.exists ("hotspotsIN.Rds")}
+library (rebird)
+hotspot_data <- ebirdhotspotlist (regionCode = "IN")
+saveRDS (hotspot_data, "hotspotsIN.Rds")
+```
+
+
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# avian ~~diversity~~ species counts
+
+```{r hotspot-plot, echo = FALSE}
+h <- readRDS ("hotspotsIN.Rds")
+hist (h$numSpeciesAllTime,
+      breaks = 20,
+      xlab = "Number of species",
+      main = "Histogram of numbers of species")
+```
+
+```{r mapview, eval = FALSE}
+library (mapview)
+h$cex <- h$numSpeciesAllTime / 1000
+mapview (h,
+         xcol = "lng",
+         ycol = "lat",
+         cex = "cex",
+         zcol = "numSpeciesAllTime",
+         alpha = 0)
+```
+
+---
+class: left, top
+background-image: url(img/india-hotspots.png)
+background-size: contain
+background-position: 50% 50%
+
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# roadless areas
+
+
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# ~~roadless~~ natural areas
+
+--
+
+## Open Street Map (OSM)
+
+- `osmdata` package
+
+- `osmextract` package
+
+--
+
+- Extract all polygons with `key = "natural"`
+
+- 238,091 polygons
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# roadless ~~natural~~ areas
+
+## For each polygon:
+
+- Measure total area
+
+- Extract all highways
+
+- Cut the polygon into pieces along highways
+
+- Measure maximal and median area of polygon pieces
+
+
+---
+class: left, centre
+background-image: url(img/nat-poly1full.png)
+background-size: cover
+background-position: 50% 50%
+
+```{r hw-polygon, echo = FALSE, eval = FALSE}
+p <- readRDS ("nat-polygons.Rds")
+p <- st_sf (p [4, ])
+f <- "polygon.poly"
+write.table (st_coordinates (p) [, 1:2],
+             file = f, sep = "    ",
+             row.names = FALSE, col.names = FALSE)
+x <- c ("polygon",
+        "first_polygon",
+        readLines (f),
+        "END",
+        "END")
+writeLines (x, f)
+
+f_hw <- tempfile (fileext = ".osm")
+cmd <- paste0 ("osmium extract -p polygon.poly india-hw-filt.pbf -o ", f_hw)
+system (cmd)
+
+dat <- osmdata_sf (doc = f_hw, quiet = TRUE) %>%
+    osm_poly2line ()
+xl <- dat$osm_lines # nolint
+
+sp <- lwgeom::st_split (p, xl)
+sp <- sf::st_collection_extract (sp, "POLYGON")
+sp$n <- seq (nrow (sp))
+```
+
+```{r polygon-example1, echo = FALSE, eval = FALSE}
+library (mapdeck)
+mapdeck (style = mapdeck_style ("light")) %>%
+    add_polygon (data = sp,
+                 stroke_width = 5,
+                 stroke_colour = "#1122ee",
+                 stroke_opacity = 1,
+                 fill_colour = "n",
+                 fill_opacity = 0.2)
+```
+
+---
+class: left, centre
+background-image: url(img/nat-poly1cut.png)
+background-size: cover
+background-position: 50% 50%
+background-color: #111111;
+
+
+---
+class: left, centre
+background-image: url(img/nat-poly2full.png)
+background-size: cover
+background-position: 50% 50%
+background-color: #111111;
+
+
+---
+class: left, centre
+background-image: url(img/nat-poly2cut.png)
+background-size: cover
+background-position: 50% 50%
+background-color: #111111;
+
+
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# roadless & natural areas
+
+## For each polygon:
+
+- Measure total area
+
+- Extract all highways
+
+- Cut the polygon into pieces along highways
+
+- Measure maximal and median area of polygon pieces
+
+--
+
+- Associate species counts with statistics of enclosing polygons
+
+## The 500 largest polygons
+
+
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# roadless & natural areas
+
+```{r model, echo = FALSE}
+x <- readRDS ("final-results.Rds")
+mod <- lm (n ~ a_nat + a_rd_med + a_rd_max, data = x)
+summary (mod)
+```
+
+---
+class: left, top
+background-image: url(img/results.png)
+background-size: contain
+background-position: 50% 50%
+
+# roadless & natural areas
+
+```{r model-plot, echo = FALSE}
+library (ggplot2)
+p <- ggplot (x, aes (y = n, x = a_rd_max)) +
+    geom_point (pch = 19, col = "orange") +
+    geom_smooth (method = "loess", formula = "y ~ x") +
+    xlab ("Maximal area of roadless space (Hectares)") +
+    ylab ("Number of species") +
+    theme(
+          panel.background = element_rect(fill = "transparent"),
+          plot.background = element_rect(fill = "transparent", color = NA),
+          panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          legend.background = element_rect(fill = "transparent"),
+          legend.box.background = element_rect(fill = "transparent")
+    )
+png("img/results.png", bg = "transparent")
+print (p)
+chk <- dev.off()
+```
+
+
+---
+class: left, top
+background-image: url(img/results.png)
+background-size: contain
+background-position: 50% 50%
+
+# roadless & natural areas
+
+.large[ Simple linear regression explained (only) around 2% of total variance]
+
+.large[ Only significant explantory variable was size of largest roadless area]
+
+.large[ Sizes of natural areas alone were not related]
+
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# roadless areas and<br>avian diversity
+
+## Question: What is more important, sizes of natural or of roadless areas?
+
+--
+
+## Answer: Roadless areas more important than natural areas alone
+
+--
+
+- Method is entirely reproducible and adaptible to anywhere else on the planet,
+  thanks to rOpenSci's packages!
+
+- Contact me (mark@ropensci.org) if you're interested in actually doing this
+  properly
 
