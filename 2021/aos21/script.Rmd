@@ -75,6 +75,11 @@ g$area <- sf::st_area (sf::st_transform (g$geometry, 3857))
 g$index <- seq (nrow (g))
 ```
 
+```{r}
+saveRDS (g, "nat-polygons.Rds")
+```
+
+
 # Code to get polygons of roadless areas
 
 This splits each natural polygon along any major roads, and calculates
