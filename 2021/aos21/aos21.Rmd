@@ -30,29 +30,11 @@ if (packageVersion ("autotest") < '0.0.2.81')
     stop ("autotest package is not at latest version")
 ```
 
-class: left, top
-background-image: url(img/icon_lettering_color_large-faded.png)
-background-size: contain
-background-position: 50% 50%
+class: middle, center, inverse
 
-# osmdata: roadless areas and avian diversity
+# osmdata, osmextract,<br>rebird, auk:<br>roadless areas and avian diversity
 
-
----
-class: left, top
-background-image: url(img/icon_lettering_color_large-faded.png)
-background-size: contain
-background-position: 50% 50%
-
-# roadless areas and<br>avian diversity
-
-## osmdata
-
-## rebird
-
-## osmexract
-
-## auk
+### Mark Padgham <br>rOpenSci & EcoHealth Alliance<br>Münster, Germany & New York, USA
 
 
 ---
@@ -64,22 +46,6 @@ background-position: 50% 50%
 # roadless areas and<br>avian diversity
 
 ## Question: What is more important, sizes of natural or of roadless areas?
-
----
-class: left, top
-background-image: url(img/icon_lettering_color_large-faded.png)
-background-size: contain
-background-position: 50% 50%
-
-# ~~roadless areas and~~<br>avian diversity
-
----
-class: left, top
-background-image: url(img/icon_lettering_color_large-faded.png)
-background-size: contain
-background-position: 50% 50%
-
-# avian diversity
 
 ---
 class: left, top
@@ -109,21 +75,25 @@ saveRDS (hotspot_data, "hotspotsIN.Rds")
 
 ---
 class: left, top
-background-image: url(img/icon_lettering_color_large-faded.png)
+background-image: url(img/count-histogram.png)
 background-size: contain
 background-position: 50% 50%
 
 # avian ~~diversity~~ species counts
 
-```{r hotspot-plot, echo = FALSE}
+```{r hotspot-plot, echo = FALSE, eval = FALSE}
 h <- readRDS ("hotspotsIN.Rds")
+png ("img/count-histogram.png", bg = "transparent")
+par (mar = c (4, 4, 6, 4))
 hist (h$numSpeciesAllTime,
       breaks = 20,
       xlab = "Number of species",
-      main = "Histogram of numbers of species")
+      main = "")
+      #main = "Histogram of numbers of species")
+chk <- dev.off()
 ```
 
-```{r mapview, eval = FALSE}
+```{r mapview, eval = FALSE, echo = FALSE}
 library (mapview)
 h$cex <- h$numSpeciesAllTime / 1000
 mapview (h,
@@ -151,16 +121,6 @@ background-position: 50% 50%
 
 
 
----
-class: left, top
-background-image: url(img/icon_lettering_color_large-faded.png)
-background-size: contain
-background-position: 50% 50%
-
-# ~~roadless~~ natural areas
-
---
-
 ## Open Street Map (OSM)
 
 - `osmdata` package
@@ -179,7 +139,7 @@ background-image: url(img/icon_lettering_color_large-faded.png)
 background-size: contain
 background-position: 50% 50%
 
-# roadless ~~natural~~ areas
+# roadless areas
 
 ## For each polygon:
 
@@ -338,11 +298,11 @@ background-position: 50% 50%
 
 # roadless & natural areas
 
-.large[ Simple linear regression explained (only) around 2% of total variance]
+.large[ **Simple linear regression explained (only) around 2% of total variance**]
 
-.large[ Only significant explantory variable was size of largest roadless area]
+.large[ **Only significant explantory variable was size of largest roadless area**]
 
-.large[ Sizes of natural areas alone were not related]
+.large[ **Sizes of natural areas alone were not related**]
 
 
 ---
