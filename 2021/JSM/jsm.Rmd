@@ -109,41 +109,6 @@ background-position: 50% 50%
 
 ## What is statistical software?
 
----
-class: left, top
-background-image: url(img/icon_lettering_color_large-faded.png)
-background-size: contain
-background-position: 50% 50%
-
-# Statistical Software Peer Review
-
-## What is statistical software?
-
-### Methodology:
-
-- Empirical collation of abstracts from:
-
-    - JSM conferences
-    - *Journal of Statistical Software*
-    - *Journal of Open Source Software*
-
-- Identify key statistical terms and represent as relational network
-
-- Analyse network structure & identify distinct clusters
-
-
----
-class: left, top
-background-image: url(img/icon_lettering_color_large-faded.png)
-background-size: contain
-background-position: 50% 50%
-
-# Statistical Software Peer Review
-
-## What is statistical software?
-
-### Results:
-
 
 .left-column[
 
@@ -876,22 +841,6 @@ background-position: 50% 50%
 
 - Standards compliance documented within code
 
-- Automated assessment tools
-
----
-class: left, top
-background-image: url(img/icon_lettering_color_large-faded.png)
-background-size: contain
-background-position: 50% 50%
-
-# Statistical Software Peer Review
-
-## Our approach
-
-- General and category-specific standards
-
-- Standards compliance documented within code
-
 - ~~Automated assessment tools~~
 
 ---
@@ -954,22 +903,6 @@ class: center, middle, inverse
 
 ## Four New Categories in Progress
 
-
----
-class: left, top
-background-image: url(img/icon_lettering_color_large-faded.png)
-background-size: contain
-background-position: 50% 50%
-
-# Statistical Software Peer Review
-
-## Our approach
-
-- General and category-specific standards
-
-- Standards compliance documented within code
-
-- ~~Automated assessment tools~~
 
 ---
 class: left, top
@@ -1182,7 +1115,7 @@ background-position: 50% 50%
 
 # The 'srr' package: How?
 
-- Insert standards into package with `srr_stats_roxygen()`
+- Insert standards into package with one line of code
 
 - Comply with standards
 
