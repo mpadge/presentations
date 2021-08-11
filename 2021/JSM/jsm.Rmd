@@ -1123,8 +1123,8 @@ background-position: 50% 50%
 
 - Generate hyperlinked `html` version with `srr_report()` function
 
-- Also extensible, with alternative standards substituted by modifying a single
-  URL
+- Also extensible, with alternative standards<br>substituted by modifying
+  a single URL
 
 
 ---
