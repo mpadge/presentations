@@ -86,6 +86,26 @@ background-image: url(img/devguide-ch15.png)
 background-size: contain
 background-position: 50% 50%
 
+---
+class: center, top, inverse
+background-image: url(img/devguide-cover.png)
+background-size: contain
+background-position: 50% 50%
+
+--
+
+.red[
+recommendations<br>not principles
+]
+
+--
+
+.red[
+semi-structured<br>
+collection of<br>
+best practices
+]
+
 
 ---
 class: left, top
@@ -119,6 +139,20 @@ Current scope includes software for:
 - text analysis
 
   ]
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# rOpenSci & Software Peer Review: Scope
+
+Current scope ~~includes~~ does NOT include software for:
+
+- statistics
+
+... even through R is an<br>"environment for statistical computing"
 
 ---
 class: center, top
