@@ -53,6 +53,41 @@ adversarial and open review process."
 
 
 ---
+class: center, middle, inverse
+background-image: url(img/devguide-cover.png)
+background-size: contain
+background-position: 50% 50%
+
+--
+
+# `devguide.ropensci.org`
+
+---
+class: center, middle, inverse
+background-image: url(img/devguide-ch1.png)
+background-size: contain
+background-position: 50% 50%
+
+---
+class: center, middle, inverse
+background-image: url(img/devguide-ch2.png)
+background-size: contain
+background-position: 50% 50%
+
+---
+class: center, middle, inverse
+background-image: url(img/devguide-ch3.png)
+background-size: contain
+background-position: 50% 50%
+
+---
+class: center, middle, inverse
+background-image: url(img/devguide-ch15.png)
+background-size: contain
+background-position: 50% 50%
+
+
+---
 class: left, top
 background-image: url(img/icon_lettering_color_large-faded.png)
 background-size: contain
@@ -854,43 +889,43 @@ class: center, middle, inverse
 
 ---
 class: left, top
-background-image: url(img/devguide-stds-G1.png)
+background-image: url(img/stats-devguide-stds-G1.png)
 background-size: contain
 background-position: 50% 50%
 
 ---
 class: left, top
-background-image: url(img/devguide-stds-G2.png)
+background-image: url(img/stats-devguide-stds-G2.png)
 background-size: contain
 background-position: 50% 50%
 
 ---
 class: left, top
-background-image: url(img/devguide-stds-G3.png)
+background-image: url(img/stats-devguide-stds-G3.png)
 background-size: contain
 background-position: 50% 50%
 
 ---
 class: left, top
-background-image: url(img/devguide-stds-G4.png)
+background-image: url(img/stats-devguide-stds-G4.png)
 background-size: contain
 background-position: 50% 50%
 
 ---
 class: left, top
-background-image: url(img/devguide-stds-BS1.png)
+background-image: url(img/stats-devguide-stds-BS1.png)
 background-size: contain
 background-position: 50% 50%
 
 ---
 class: left, top
-background-image: url(img/devguide-stds-BS2.png)
+background-image: url(img/stats-devguide-stds-BS2.png)
 background-size: contain
 background-position: 50% 50%
 
 ---
 class: left, top
-background-image: url(img/devguide-stds-BS3.png)
+background-image: url(img/stats-devguide-stds-BS3.png)
 background-size: contain
 background-position: 50% 50%
 
