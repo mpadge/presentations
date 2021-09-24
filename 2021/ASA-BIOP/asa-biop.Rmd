@@ -87,8 +87,6 @@ background-image: url(img/devguide-cover.png)
 background-size: contain
 background-position: 50% 50%
 
---
-
 .red[
 recommendations<br>not principles
 ]
@@ -330,6 +328,8 @@ background-position: 50% 50%
 # Statistical Software Standards
 
 ## Results
+
+- Input from > 20 people
 
 - 40 General Standards
 
@@ -692,7 +692,7 @@ DT::datatable (a)
 ```
 
 ---
-class: left, top
+class: left, top, inverse
 background-image: url(img/stats-var-TRUE.png)
 background-size: contain
 background-position: 50% 50%
