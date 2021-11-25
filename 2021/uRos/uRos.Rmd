@@ -1,5 +1,6 @@
 ---
 title: "Peer-reviewing Code in Statistical R Packages: Standards, Processes, and Tools"
+subtitle: "uRos 2021"
 author: "Mark Padgham & Noam Ross<br>rOpenSci & EcoHealth Alliance<br>Münster, Germany & New York, USA"
 output:
       xaringan::moon_reader:
@@ -307,6 +308,16 @@ Where appropriate, Bayesian Software should:
 - ***BS3.2*** *Provide distinct routines for processing perfectly collinear
   data, potentially bypassing sampling algorithms*
 
+
+---
+class: center, top, inverse
+background-image: url(img/icon_lettering_color_large-dark.png)
+background-size: contain
+background-position: 50% 50%
+
+# stats-devguide.ropensci.org
+
+## All 300+ standards
 
 ---
 class: left, top, inverse
