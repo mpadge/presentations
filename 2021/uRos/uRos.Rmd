@@ -188,30 +188,6 @@ background-position: 50% 50%
 
 - ### &#9989; 2. Develop Standards for Statistical Software
 
----
-class: left, top
-background-image: url(img/icon_lettering_color_large-faded.png)
-background-size: contain
-background-position: 50% 50%
-
-# Statistical Software Standards
-
-## Methodology (Specific):
-
-- Collate lists of software packages in each category
-
-- "Read" code in each package
-
-- "Use" each package to provide insight into:
-    - User interfaces
-    - Package design
-    - Documentation
-    - ...?
-
-- Take notes on good and bad practices
-
-- Translate these into general principles
-
 
 ---
 class: left, top
@@ -221,7 +197,7 @@ background-position: 50% 50%
 
 # Statistical Software Standards
 
-## Methodology (General):
+## Methodology:
 
 - Translate observed practices into principles
 
@@ -272,6 +248,65 @@ background-position: 50% 50%
 - Output Structures
 
 - Testing
+
+---
+class: center, middle, inverse
+background-image: url(img/icon_lettering_color_large-dark.png)
+background-size: contain
+background-position: 50% 50%
+
+# stats-devguide.ropensci.org
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# Statistical Software Standards
+
+## Examples from General Standards: *Documentation*
+
+- ***G1.0*** *Statistical Software should list at least one primary reference
+  from published academic literature.*
+
+- ***G1.2*** *Statistical Software should include a Life Cycle Statement
+  describing current and anticipated future states of development.*
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# Statistical Software Standards
+
+## Examples from General Standards: *Algorithms*
+
+- ***G3.0*** *Statistical software should never compare floating point numbers
+  for equality. All numeric equality comparisons should either ensure that they
+  are made between integers, or use appropriate tolerances for approximate
+  equality.*
+
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# Statistical Software Standards
+
+## Examples from Standards for Bayesian and Monte-Carlo Software:<br>*Pre-processing*
+
+Where appropriate, Bayesian Software should:
+
+- ***BS3.1*** *Implement pre-processing routines to diagnose perfect
+  collinearity, and provide appropriate diagnostic messages or warnings*
+
+- ***BS3.2*** *Provide distinct routines for processing perfectly collinear
+  data, potentially bypassing sampling algorithms*
+
 
 ---
 class: left, top, inverse
