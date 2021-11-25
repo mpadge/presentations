@@ -35,6 +35,10 @@ background-image: url(img/ropensci-web.png)
 background-size: 100%
 background-position: 50% 50%
 
+--
+
+.fonthuge[ropensci.org]
+
 ---
 class: center, middle, inverse
 background-image: url(img/ropensci-web-zoom.png)
@@ -293,6 +297,9 @@ background-position: 50% 50%
 
 ---
 class: center, middle, inverse
+background-image: url(img/icon_lettering_color_large-dark.png)
+background-size: contain
+background-position: 50% 50%
 
 # The 'srr' package
 
@@ -422,13 +429,31 @@ background-position: 50% 50%
 
 ---
 class: left, top, inverse
+background-image: url(img/gittargets5.png)
+background-size: contain
+background-position: 50% 50%
+
+---
+class: left, top, inverse
 background-image: url(img/gittargets8.png)
 background-size: contain
 background-position: 50% 50%
 
 ---
 class: left, top, inverse
+background-image: url(img/gittargets1.png)
+background-size: contain
+background-position: 50% 50%
+
+---
+class: left, top, inverse
 background-image: url(img/bot.png)
+background-size: contain
+background-position: 50% 50%
+
+---
+class: left, top, inverse
+background-image: url(img/bot2.png)
 background-size: contain
 background-position: 50% 50%
 
@@ -442,6 +467,9 @@ background-position: 50% 50%
 
 ---
 class: left, middle, inverse
+background-image: url(img/icon_lettering_color_large-dark.png)
+background-size: contain
+background-position: 50% 50%
 
 # Statistical Software Peer Review
 
