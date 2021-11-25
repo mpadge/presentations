@@ -1,0 +1,456 @@
+---
+title: "Peer-reviewing Code in Statistical R Packages: Standards, Processes, and Tools"
+author: "Mark Padgham & Noam Ross<br>rOpenSci & EcoHealth Alliance<br>Münster, Germany & New York, USA"
+output:
+      xaringan::moon_reader:
+            lib_dir: libs
+            css: xaringan-themer.css
+            self_contained: true
+            mathjax: null
+            nature:
+                  highlightStyle: github
+                  highlightLines: true
+                  countIncrementalSlides: false
+---
+
+```{r xaringan, include = FALSE}
+library(xaringanthemer)
+source ("myxaringantheme.R")
+```
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)# suppress version num in subdir name
+
+knitr::opts_chunk$set(cache = TRUE,
+                      collapse = TRUE,
+                      warning = FALSE)
+                      #message = FALSE)
+library (autotest)
+if (packageVersion ("autotest") < '0.0.2.81')
+    stop ("autotest package is not at latest version")
+```
+
+class: center, middle, inverse
+background-image: url(img/ropensci-web.png)
+background-size: 100%
+background-position: 50% 50%
+
+---
+class: center, middle, inverse
+background-image: url(img/ropensci-web-zoom.png)
+background-size: 100%
+background-position: 50% 50%
+
+
+---
+class: center, middle, inverse
+background-image: url(img/ropensci-pkgs1.png)
+background-size: 100%
+background-position: 50% 50%
+
+
+---
+class: center, middle, inverse
+background-image: url(img/ropensci-pkgs2.png)
+background-size: 100%
+background-position: 50% 50%
+
+
+---
+class: center, middle, inverse
+background-image: url(img/ropensci-peer-review.png)
+background-size: 100%
+background-position: 50% 50%
+
+---
+class: center, middle, inverse
+background-image: url(img/ropensci-stats-peer-review.png)
+background-size: 100%
+background-position: 50% 50%
+
+
+---
+class: center, top
+background-image: url(img/SloanLogo-1B-SMALL-Gold-Blue.png)
+background-size: 90%
+background-position: 50% 50%
+
+--
+
+# Expanding Software Peer Review
+
+
+---
+class: left, top, inverse
+background-image: url(img/icon_lettering_color_large-dark.png)
+background-size: contain
+background-position: 50% 50%
+
+# Statistical Software Peer Review
+
+
+- ### &#9989; 1. Define "Statistical Software"
+
+- ### &#9989; 2. Develop Standards for Statistical Software
+
+- ### &#9989; 3. Develop Tools to Aid Software Development
+
+- ### &#9989; 4. Automate System for Software Submissions
+
+- ### &#9989; 5. Open Peer Review System to Statistical Software
+
+<br><br>
+(Status: November 2021)
+
+
+---
+class: left, top, inverse
+background-image: url(img/icon_lettering_color_large-dark.png)
+background-size: contain
+background-position: 50% 50%
+
+# Statistical Software Peer Review
+
+
+- ### &#9989; 1. Define "Statistical Software"
+
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# Statistical Software Peer Review
+
+## What is Statistical Software?
+
+- Empirical Analysis
+
+- Data: All abstracts from major statistics conferences (JSM, SDSS, ...
+  n ~ 20,000)
+
+- Methods: Natural Language Processing &#8594; concept clusters &#8594; network
+  analyses
+
+- Results ...
+
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# Statistical Software Peer Review
+
+## What is Statistical Software?
+
+
+.left-column[
+
+- Bayesian and Monte Carlo
+- Regression and Supervised Learning
+- Dimensionality Reduction, Clustering, and Unsupervised Learning
+- Exploratory Data Analysis (EDA) and Summary Statistics
+
+]
+
+.right-column[
+
+
+- Time Series Analyses
+- Machine Learning
+- Spatial Analyses
+- ~~Wrapper Packages~~
+- ~~Network Analysis~~
+- ~~Probability Distributions~~
+- ~~Workflow Support~~
+
+]
+
+---
+class: left, top, inverse
+background-image: url(img/icon_lettering_color_large-dark.png)
+background-size: contain
+background-position: 50% 50%
+
+# Statistical Software Peer Review
+
+
+- ### &#9989; 1. Define "Statistical Software"
+
+--
+
+- ### &#9989; 2. Develop Standards for Statistical Software
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# Statistical Software Standards
+
+## Methodology (Specific):
+
+- Collate lists of software packages in each category
+
+- "Read" code in each package
+
+- "Use" each package to provide insight into:
+    - User interfaces
+    - Package design
+    - Documentation
+    - ...?
+
+- Take notes on good and bad practices
+
+- Translate these into general principles
+
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# Statistical Software Standards
+
+## Methodology (General):
+
+- Translate observed practices into principles
+
+- Write these principles as standards
+
+- Selectively elevate standards to *General*
+
+- Iterate, remove, add, refine, restructure standards
+
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# Statistical Software Standards
+
+## Results
+
+- Input from > 20 people
+
+- 40 General Standards
+
+- 265 Category-Specific Standards
+
+- 7 Categories
+
+- Four Further Categories in Development
+
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# Statistical Software Standards
+
+### [General & Category-Specific Standards](https://stats-devguide.ropensci.org/standards.html)<br>generally divided into standards for:
+
+- Documentation
+
+- Input Structures
+
+- Algorithms
+
+- Output Structures
+
+- Testing
+
+---
+class: left, top, inverse
+background-image: url(img/icon_lettering_color_large-dark.png)
+background-size: contain
+background-position: 50% 50%
+
+# Statistical Software Peer Review
+
+
+- ### &#9989; 1. Define "Statistical Software"
+
+- ### &#9989; 2. Develop Standards for Statistical Software
+
+- ### &#9989; 3. Develop Tools to Aid Software Development
+
+
+---
+class: left, top, inverse
+background-image: url(img/package-flow.png)
+background-size: contain
+background-position: 50% 50%
+
+---
+class: center, middle, inverse
+
+# The 'srr' package
+
+## `srr` = "Software Review Roclets"
+
+(A "roclet" is a documentation engine,<br>or "doclet", for the **R** language.)
+
+## github.com/ropensci-review-tools
+
+## search: "ropensci srr"
+
+
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'srr' package: How?
+
+- [Enable standards compliance statements to be included within code itself, at
+  the point(s) at which each standard is actually
+  addressed.](https://ropensci-review-tools.github.io/roreviewapi/static/tsbox_srraad57cea.html)
+
+--
+
+- One function dumps full text of standards in file
+  `R/srr-stats-standards.R`
+
+- All are initially tagged `@srrstatsTODO`
+
+- Standards are addressed by changing tag to `@srrstats` and moving to location
+  within code where standard is addressed
+
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'srr' package: How?
+
+- Reports on standards compliance automatically generated locally each time
+  documentation is updated.
+
+```{r roxygenise-demo1, eval = FALSE}
+roxygen2::roxygenise(path)
+```
+
+```{r roxygenise-demo1-output, echo = FALSE, message = TRUE, collapse = TRUE}
+cli::cli_alert_info ("Loading demo")
+cli::cli_h1 ("rOpenSci Statistical Software Standards")
+cli::cli_h3 ("@srrstats standards:")
+cli::cli_li ("[G1.0] in function 'addtwo()' on line#11 of file [R/test.R]")
+```
+
+---
+class: left, top
+background-image: url(img/icon_lettering_color_large-faded.png)
+background-size: contain
+background-position: 50% 50%
+
+# The 'srr' package: Summary
+
+- Insert standards into package with one line of code
+
+- Comply with standards
+
+- Update documentation to automatically generate compliance report
+
+- Generate hyperlinked `html` version with `srr_report()` function
+
+- Also extensible, with alternative standards<br>substituted by modifying
+  a single URL
+
+
+---
+class: left, top, inverse
+background-image: url(img/package-flow.png)
+background-size: contain
+background-position: 50% 50%
+
+
+---
+class: left, top, inverse
+background-image: url(img/gittargets1.png)
+background-size: contain
+background-position: 50% 50%
+
+---
+class: left, top, inverse
+background-image: url(img/gittargets2.png)
+background-size: contain
+background-position: 50% 50%
+
+---
+class: left, top, inverse
+background-image: url(img/gittargets3.png)
+background-size: contain
+background-position: 50% 50%
+
+---
+class: left, top, inverse
+background-image: url(img/gittargets4.png)
+background-size: contain
+background-position: 50% 50%
+
+---
+class: left, top, inverse
+background-image: url(img/gittargets5.png)
+background-size: contain
+background-position: 50% 50%
+
+---
+class: left, top, inverse
+background-image: url(img/gittargets6.png)
+background-size: contain
+background-position: 50% 50%
+
+---
+class: left, top, inverse
+background-image: url(img/gittargets7.png)
+background-size: contain
+background-position: 50% 50%
+
+---
+class: left, top, inverse
+background-image: url(img/gittargets8.png)
+background-size: contain
+background-position: 50% 50%
+
+---
+class: left, top, inverse
+background-image: url(img/bot.png)
+background-size: contain
+background-position: 50% 50%
+
+
+---
+class: left, top, inverse
+background-image: url(img/comm-call.png)
+background-size: contain
+background-position: 50% 50%
+
+
+---
+class: left, middle, inverse
+
+# Statistical Software Peer Review
+
+- Now accepting submissions
+
+- Search "rOpenSci statistical software"
+
+- `stats-devguide.ropensci.org`
+
+- All tools available for use now at `github.com/ropensci-review-tools`
+
+- Please attend our community call: 7 Dec 2021
