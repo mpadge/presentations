@@ -87,7 +87,7 @@ class: left, top
 
 # Was für Daten?
 
-- Hauptsächlich mobilitäts- und verkehrsorientierte Datensätze, die in Bezug auf Reisezeiten und Entfernungen analysiert werden
+- Hauptsächlich Reisezeiten, Entfernungen, und andere Metriken
 
 --
 
@@ -105,16 +105,53 @@ class: left, top
 
 # Was für Daten?
 
-- Alle Datensätze sind mit einem primären soziodemografischen Indikator sowie mit einander in Verbindung gestellt.
+- Alle im Bezug auf sozio-demographische Indikatoren, sowie mit einander
 
-- Diese statistisch analysierten Beziehungen bieten z.B. einen direkten Einblick in die Beziehung zwischen:
+- Beispiele von statistisch analysierten Beziehungen:
 
-  - der Nähe zu Bildungseinrichtungen und dem Zugang zu Naturräumen, oder
-  - der Fahrradinfrastruktur und den soziodemografischen Bedingungen.
+  - Nähe zu Bildungseinrichtungen und Zugang zu Naturräumen, oder
 
---
+  - Fahrradinfrastruktur und soziodemografischen Bedingungen.
 
-- Und ermöglichen den Vergleich dieser statistischen Beziehungen zwischen verschiedenen Städten
+- Vergleiche zwischen Städten
+
+- Niedrig/negativ ist immer besser
+
+
+---
+class: left, top
+
+# Wie sieht Münster aus?
+
+![](img/transport-combined.png)
+
+---
+class: left, top
+
+# Wie sieht Münster aus?
+
+![](img/bicycle.png)
+
+---
+class: left, top
+
+# Wie sieht Münster aus?
+
+![](img/parking.png)
+
+---
+class: left, top
+
+# Wie sieht Münster aus?
+
+![](img/social-bike.png)
+
+---
+class: left, top
+
+![](img/ms-social-bike-map.png)
+
+
 
 ---
 class: left, top
@@ -131,62 +168,24 @@ class: left, top
 ---
 class: left, top
 
-# And was nun?
-
-- In der nächsten Phase wird ein Algorithmus für maschinelles Lernen entwickelt, der plausible Wege aufzeigt, wie eine Stadt einer anderen Stadt in Bezug auf die gewünschten Variablen und/oder die Beziehungen zwischen den Variablen gleichwertiger werden kann.
-
-- Sie wird sich auf historische Analysen der Entwicklungsverläufe der letzten etwa fünf Jahre stützen, insbesondere um plausible Entwicklungsraten zu kalibrieren.
-
----
-class: left, top
-
-# Und was für die Stadt Münster
+# Urban Analyst und Stadt Münster
 
 - *Masterplan Mobilität Münster 2035+* schlägt zahlreiche Maßnahmen vor. z.B.
     - S-bahn Netz
     - Metrobussystem
     - Parkplatzreduzierung
 
----
-class: left, top
+- Ein Prozess der Sorgfaltsprüfung zur Bewertung jeder gewählten Kombination von Projekten und Plänen
 
-# Und was für die Stadt Münster
-
-![](img/transport-combined.png)
-
----
-class: left, top
-
-# Und was für die Stadt Münster
-
-![](img/bicycle.png)
-
----
-class: left, top
-
-# Und was für die Stadt Münster
-
-![](img/parking.png)
-
----
-class: left, top
-
-# Und was für die Stadt Münster
-
-![](img/social-bike.png)
-
----
-class: left, top
-
-![](img/ms-social-bike-map.png)
+- Eine externe Validierung anhand vergleichbarer Entwicklungen in anderen Städten
 
 ---
 class: left, top
 
 # Warum Urban Analyst?
 
-- Es wird einen einheitlichen berblick über die kombinierten Auswirkungen aller vorgeschlagenen Maßnahmen geben
+- **Überblick** über die kombinierten Auswirkungen aller vorgeschlagenen Maßnahmen
 
-- Es wird quantitative Vergleiche der Auswirkungen dieser Maßnahmen mit anderen Städten ermöglichen
+- **Vergleiche** der Auswirkungen dieser Maßnahmen mit anderen Städten
 
-- In der nächsten Phase wird ein Vergleich der vorgeschlagenen Entwicklungsverläufe mit einer Reihe von plausiblen optimalen Verläufen ermöglichen
+- **Vorschläge** für Entwicklungsverläufe mit einer Reihe von plausiblen optimalen Verläufen (in der nächsten Phase)
