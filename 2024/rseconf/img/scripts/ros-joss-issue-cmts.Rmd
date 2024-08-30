@@ -68,6 +68,9 @@ get_dat <- function (org = "ropensci") {
 
     number <- created_at <- num_cmts <- num_bot <- NULL
 
+    err_count <- 0
+    max_errors <- 5L
+
     while (has_next_page) {
 
         q <- gh_issues_qry (
@@ -79,7 +82,12 @@ get_dat <- function (org = "ropensci") {
             error = function (e) NULL
         )
 
+        if (err_count > max_errors) {
+            break
+        }
+
         if (is.null (dat)) {
+            err_count <- err_count + 1L
             next
         }
 
