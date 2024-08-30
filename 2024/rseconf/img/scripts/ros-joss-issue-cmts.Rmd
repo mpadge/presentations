@@ -1,0 +1,145 @@
+
+```{r}
+gh_issues_qry <- function (org = "ropensci",
+                           end_cursor = NULL) {
+
+    org <- match.arg (org, c ("ropensci", "openjournals"))
+
+    after_txt <- ""
+    if (!is.null (end_cursor)) {
+        after_txt <- paste0 (", after:\"", end_cursor, "\"")
+    }
+
+    repo <- ifelse (org == "ropensci", "software-review", "joss-reviews")
+    accept_txt <- ifelse (org == "ropensci", "6/approved", "accepted")
+
+        # issues (first: 100, states: [CLOSED], labels: ['", accept_txt, "']" , after_txt, ") {
+    q <- paste0 ("{
+        repository(owner:\"", org, "\", name:\"", repo, "\") {
+        issues (first: 100, states: [CLOSED], labels: \"", accept_txt, "\" " , after_txt, ") {
+                       pageInfo {
+                           hasNextPage
+                           endCursor
+                       }
+                       edges {
+                           node {
+                               ... on Issue {
+                                   number
+                                   createdAt
+                                   state
+                                   labels (first: 100) {
+                                       edges {
+                                           node {
+                                               name,
+                                           }
+                                       }
+                                   }
+                                   comments (last: 100) {
+                                       nodes {
+                                           createdAt,
+                                           author {
+                                               login
+                                           },
+                                           body
+                                       }
+                                   }
+                               }
+                           }
+                       }
+                   }
+                }
+        }")
+
+    return (q)
+}
+```
+
+```{r}
+get_dat <- function (org = "ropensci") {
+
+    org <- match.arg (org, c ("ropensci", "openjournals"))
+    bot <- ifelse (org == "ropensci", "ropensci-review-bot", c ("whedon", "editorialbot"))
+
+    has_next_page <- TRUE
+    end_cursor <- NULL
+    comments <- list ()
+    page_count <- 0L
+    quiet <- FALSE
+
+    number <- created_at <- num_cmts <- num_bot <- NULL
+
+    while (has_next_page) {
+
+        q <- gh_issues_qry (
+            org = org,
+            end_cursor = end_cursor
+        )
+        dat <- tryCatch (
+            gh::gh_gql (query = q),
+            error = function (e) NULL
+        )
+
+        if (is.null (dat)) {
+            next
+        }
+
+        has_next_page <- dat$data$repository$issues$pageInfo$hasNextPage
+        end_cursor <- dat$data$repository$issues$pageInfo$endCursor
+
+        edges <- dat$data$repository$issues$edges
+
+        number <- c (
+            number,
+            vapply (edges, function (i) i$node$number, integer (1L))
+        )
+        created_at <- c (
+            created_at,
+            vapply (edges, function (i) {
+                strftime (i$node$createdAt, "%Y-%m-%d")
+            }, character (1L))
+        )
+        cmt_dat <- vapply (edges, function (i) {
+            cmts <- i$node$comments$nodes
+            auths <- vapply (cmts, function (j) {
+                res <- j$author$login
+                ifelse (is.null (res), NA_character_, res)
+            }, character (1L))
+            n_bot <- length (which (auths %in% bot))
+            c (length (cmts), n_bot)
+        }, integer (2L))
+        num_cmts <- c (num_cmts, cmt_dat [1, ])
+        num_bot <- c (num_bot, cmt_dat [2, ])
+
+        page_count <- page_count + 1L
+        if (!quiet) {
+            message (
+                "Retrieved page [", page_count, "] to issue number [",
+                max (number), "]"
+            )
+        }
+    }
+
+    data.frame (
+        number = number,
+        created_at = created_at,
+        num_cmts = num_cmts,
+        num_bot = num_bot
+    )
+}
+```
+```{r}
+dat_r <- get_dat (org = "ropensci")
+saveRDS (dat_r, "gh-cmt-data-ropensci.Rds")
+dat_j <- get_dat (org = "openjournals")
+saveRDS (dat_j, "gh-cmt-data-joss.Rds")
+```
+
+```{r}
+dat_r <- readRDS ("gh-cmt-data-ropensci.Rds")
+dat_j <- readRDS ("gh-cmt-data-joss.Rds")
+```
+
+
+
+
+
