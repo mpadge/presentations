@@ -1,14 +1,28 @@
 
+This query trawls backwards through the issues, from most recent first. This is
+set via `last: 100` rather than `first: 100`, and also requires modified
+`pageInfo` to use `hasPreviousPage` rathern than `hasNextPage`, and
+`startCursor` rather than `endCursor`.
+
+
+
 ```{r}
 gh_issues_qry <- function (org = "ropensci",
+                           backwards = TRUE,
                            end_cursor = NULL) {
 
     org <- match.arg (org, c ("ropensci", "openjournals"))
 
     after_txt <- ""
     if (!is.null (end_cursor)) {
-        after_txt <- paste0 (", after:\"", end_cursor, "\"")
+        after_txt <- ifelse (backwards,
+            paste0 (", before:\"", end_cursor, "\""),
+            paste0 (", after:\"", end_cursor, "\"")
+        )
     }
+
+    pgInfo1 <- ifelse (backwards, "hasPreviousPage", "hasNextPage")
+    pgInfo2 <- ifelse (backwards, "startCursor", "endCursor")
 
     repo <- ifelse (org == "ropensci", "software-review", "joss-reviews")
     accept_txt <- ifelse (org == "ropensci", "6/approved", "accepted")
@@ -16,10 +30,10 @@ gh_issues_qry <- function (org = "ropensci",
         # issues (first: 100, states: [CLOSED], labels: ['", accept_txt, "']" , after_txt, ") {
     q <- paste0 ("{
         repository(owner:\"", org, "\", name:\"", repo, "\") {
-        issues (first: 100, states: [CLOSED], labels: \"", accept_txt, "\" " , after_txt, ") {
+        issues (last: 100, states: [CLOSED], labels: \"", accept_txt, "\" " , after_txt, ") {
                        pageInfo {
-                           hasNextPage
-                           endCursor
+                           ", pgInfo1, "
+                           ", pgInfo2, "
                        }
                        edges {
                            node {
@@ -75,6 +89,7 @@ get_dat <- function (org = "ropensci") {
 
         q <- gh_issues_qry (
             org = org,
+            backwards = FALSE,
             end_cursor = end_cursor
         )
         dat <- tryCatch (
