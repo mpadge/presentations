@@ -1,43 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta
-			name="viewport"
-			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-		/>
+    <head>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+        />
 
-		<title>reveal.js</title>
+        <title>pkgstats</title>
 
-		<link rel="stylesheet" href="dist/reset.css" />
-		<link rel="stylesheet" href="dist/reveal.css" />
-		<link rel="stylesheet" href="dist/theme/black.css" />
+        <link rel="stylesheet" href="dist/reset.css" />
+        <link rel="stylesheet" href="dist/reveal.css" />
+        <link rel="stylesheet" href="dist/theme/sky.css" />
 
-		<!-- Theme used for syntax highlighted code -->
-		<link rel="stylesheet" href="dist/plugin/highlight/monokai.css" />
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
-			</div>
-		</div>
+        <!-- Theme used for syntax highlighted code -->
+        <link rel="stylesheet" href="dist/plugin/highlight/monokai.css" />
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
 
-		<script src="dist/reveal.js"></script>
-		<script src="dist/plugin/notes.js"></script>
-		<script src="dist/plugin/markdown.js"></script>
-		<script src="dist/plugin/highlight.js"></script>
-		<script>
-			// More info about initialization & config:
-			// - https://revealjs.com/initialization/
-			// - https://revealjs.com/config/
-			Reveal.initialize({
-				hash: true,
+                <section>
+                    <h2>The (aggregated) history of every CRAN package ever</h2>
 
-				// Learn about plugins: https://revealjs.com/plugins/
-				plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
-			});
-		</script>
-	</body>
+                    <p>Mark Padgham, rOpenSci</p>
+                </section>
+
+                <section data-background="img/ropensci-main.png" data-background-size="contain" data-background-transition="fade">
+                </section>
+
+                <section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/cubes.svg", data-background-size="contain" data-background-position="5%">
+                    <div class="r-hstack justify-center" style="margin-bottom: -2.5rem;">
+                        <a href="https://ropensci.org">
+                            <img src="img/logo-dark.svg" alt="ropensci logo" style="height: 180px; margin: 1.0rem auto 1.2rem auto; background: transparent;" class="ropensci-logo">
+                        </a>
+                    </div>
+                </section>
+
+                <section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/cubes.svg", data-background-size="contain" data-background-position="5%">
+                    <div class="r-hstack justify-center" style="margin-bottom: -2.5rem;">
+                        <a href="https://ropensci.org">
+                            <img src="img/logo-dark.svg" alt="ropensci logo" style="height: 180px; margin: 1.0rem auto 1.2rem auto; background: transparent;" class="ropensci-logo">
+                        </a>
+                    </div>
+                    <a href="https://ropensci.org">
+                        <code><b>
+                            ropensci.org
+                        </b> </code>
+                    </a> <br>
+                    <a href="https://ropensci.org">
+                        <code><b>
+                            mark@ropensci.org
+                        </b> </code>
+                    </a>
+                </section>
+
+                <section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/cubes.svg", data-background-size="contain" data-background-position="5%">
+                    <div class="r-hstack justify-center" style="margin-bottom: -2.5rem;">
+                        <h2>pkgstats</h2>
+                    </div><br>
+                    <div>
+                        <a href="https://ropensci.org">
+                            <code><b>
+                                docs.ropensci.org/pkgstats
+                            </b> </code>
+                        </a>
+                    </div>
+                    <div>Search "ropensci pkgstats"</div>
+                    <div>
+                    <p>
+                        Extract summary statistics of R package structure and
+                        functionality. Not all statistics of course, but a good
+                        go at balancing insightful statistics while ensuring
+                        computational feasibility.
+                    </p>
+                    </div>
+                </section>
+
+                <section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/cubes.svg", data-background-size="contain" data-background-position="5%">
+                    <div class="r-hstack justify-center" style="margin-bottom: -2.5rem;">
+                        <h2>What statistics?</h2>
+                    </div>
+                </section>
+
+                <section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/cubes.svg", data-background-size="contain" data-background-position="5%">
+                    <div class="r-hstack justify-center" style="margin-bottom: -2.5rem;">
+                        <h2>What statistics?</h2>
+                    </div><br>
+                    <div>
+                        <ul>
+                            <li>&gt; 90 statistics</li>
+                            <li><code>DESCRIPTION</code> statistics</li>
+                            <ul>
+                                <li>Authors, contributors</li>
+                                <li>URL(s)</li>
+                                <li>Dependencies</li>
+                            </ul>
+                            <li>Languages, files and lines-of-code</li>
+                            <li>"Objects" (or "functions" in R)</li>
+                            <li>Relations between objects</li>
+                            <ul>
+                                <li>Including across all languages (R &rarr; C; js &rarr; C++)</li>
+                            </ul>
+                            <li>External calls to all R functions</li>
+                        </ul>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+
+        <script src="dist/reveal.js"></script>
+        <script src="dist/plugin/notes.js"></script>
+        <script src="dist/plugin/markdown.js"></script>
+        <script src="dist/plugin/highlight.js"></script>
+        <script>
+        // More info about initialization & config:
+        // - https://revealjs.com/initialization/
+        // - https://revealjs.com/config/
+        Reveal.initialize({
+            hash: true,
+
+            // Learn about plugins: https://revealjs.com/plugins/
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+        });
+        </script>
+    </body>
 </html>
