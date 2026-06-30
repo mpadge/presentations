@@ -20,13 +20,12 @@ calc_fig1_urls <- !file.exists (f_fig1_urls)
 
 f_fig1_aut_ctb <- file.path (v_data_dir, "fig01-aut-ctb.Rds")
 calc_fig3_aut_ctb <- !file.exists (f_fig1_aut_ctb)
-f_fig1_lic <- file.path (v_data_dir, "fig01-lic.Rds")
-calc_fig1_lic <- !file.exists (f_fig1_lic)
 
 fig01_png <- file.path (here, "img", "fig01.png")
 fig02_png <- file.path (here, "img", "fig02.png")
 fig03_png <- file.path (here, "img", "fig03.png")
 fig04_png <- file.path (here, "img", "fig04.png")
+fig05_png <- file.path (here, "img", "fig05.png")
 calc_fig3_aut_ctb <- calc_fig3_aut_ctb & !file.exists (fig03_png)
 ```
 
@@ -291,29 +290,29 @@ dat_urls$what <- ifelse (grepl ("git", dat_urls$type), "git", "all")
 dat_urls_annual <- dat_urls [grep ("annual", dat_urls$type), ]
 dat_urls <- dat_urls [which (!grepl ("annual", dat_urls$type)), ]
 
-p3 <- dat_urls |>
+p4 <- dat_urls |>
     ggplot (aes (x = year, y = prop_urls, colour = what)) +
-    geom_line () +
-    geom_line (data = dat_urls_annual, lty = 2) +
-    ylab ("Proportion pkgs with URLs") +
-    ggtitle ("C: Prop URLs") +
-    theme (legend.title = element_blank(),
-           legend.position = c (0.2, 0.9),
-           legend.background = element_rect(fill='transparent', colour='transparent'))
+    geom_line (lwd = 1.5) +
+    geom_line (data = dat_urls_annual, lty = 2, lwd = 1.5) +
+    xlab ("Year") +
+    ylab ("Proportion") +
+    theme (
+        text = element_text (size = 20),
+        legend.title = element_blank (),
+        legend.position = c (0.2, 0.85),
+        legend.background = element_rect(fill='transparent', colour=NA),
+        panel.background = element_rect(fill='transparent'),
+        plot.background = element_rect(fill='transparent', color=NA),
+        panel.grid.major = element_line(colour = "gray70", linetype = 2),
+        legend.box.background = element_rect(fill='transparent', colour=NA)
+    )
+ggsave (fig04_png, p4, bg = "transparent", width = 10, height = 7)
 
-p4 <- readRDS (f_fig1_lic) |>
-    mutate (lty = (what == "cran_by_year")) |>
-    ggplot (aes (x = year, y = n, lty = lty)) +
-    geom_line () +
-    theme (legend.position = "none") +
-    ylab ("Number of distinct licenses") +
-    ggtitle ("D: Num licenses")
-
-png (fig01_png, width = 7, height = 7, units = "in", res = 300)
-(p1 + p2) / (p3 + p4)
-graphics.off ()
-```
-
-```{r fig1-num_aut_ctb2, echo = FALSE, out.width = 700, fig.cap = "**Figure 1.** Annual developments of CRAN package submissions (A), and of metadata from package 'DESCRIPTION' files (B-D)."}
-knitr::include_graphics (fig01_png)
+p5 <- p4 +
+    annotate ("text", x = 2004, y = 0.25,
+              label = "Git April-June 2005", size = 8, hjust = 0) +
+    annotate ("curve", x = 2005, y = 0.30, xend = 2005.2, yend = 0.43,
+              arrow = arrow (length = unit (0.3, "cm"), type = "closed"),
+              curvature = 0.25)
+ggsave (fig05_png, p5, bg = "transparent", width = 10, height = 7)
 ```
