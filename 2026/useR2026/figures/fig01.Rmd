@@ -19,14 +19,15 @@ f_fig1_urls <- file.path (v_data_dir, "fig01-urls.Rds")
 calc_fig1_urls <- !file.exists (f_fig1_urls)
 
 f_fig1_aut_ctb <- file.path (v_data_dir, "fig01-aut-ctb.Rds")
-calc_fig1_aut_ctb <- !file.exists (f_fig1_aut_ctb)
+calc_fig3_aut_ctb <- !file.exists (f_fig1_aut_ctb)
 f_fig1_lic <- file.path (v_data_dir, "fig01-lic.Rds")
 calc_fig1_lic <- !file.exists (f_fig1_lic)
 
 fig01_png <- file.path (here, "img", "fig01.png")
 fig02_png <- file.path (here, "img", "fig02.png")
-calc_fig1_aut_ctb <- calc_fig1_aut_ctb & !file.exists (fig01_png)
-calc_fig1_lic <- !file.exists (f_fig1_lic) & !file.exists (fig01_png)
+fig03_png <- file.path (here, "img", "fig03.png")
+fig04_png <- file.path (here, "img", "fig04.png")
+calc_fig3_aut_ctb <- calc_fig3_aut_ctb & !file.exists (fig03_png)
 ```
 
 ```{r fig1-pkg-subs, eval = calc_fig1_pkg_subs}
@@ -245,7 +246,7 @@ p2 <- dat_w |>
 ggsave (fig02_png, p2, bg = "transparent", width = 10, height = 7)
 ```
 
-```{r fig2-make, eval = !file.exists (fig02_png), fig.width = 7, fig.height = 3.5}
+```{r fig3-make, eval = !file.exists (fig03_png)}
 dat <- readRDS (f_fig1_aut_ctb)
 lo <- dat |>
     mutate (aut_lo = n_aut - se_aut,
@@ -267,21 +268,27 @@ fig1_dat$hi <- hi$value
 dat_annual <- fig1_dat [fig1_dat$what == "annual", ]
 fig1_dat <- fig1_dat [fig1_dat$what == "cran_by_year", ]
 
-p2 <- fig1_dat |>
+p3 <- fig1_dat |>
     ggplot (aes (x = year, y = value, colour = name)) +
-    #geom_ribbon (aes (ymin = lo, ymax = hi, fill = name, colour = NULL),
-    #             alpha = 0.15, show.legend = FALSE) +
-    geom_line () +
-    #geom_ribbon (data = dat_annual,
-    #             aes (ymin = lo, ymax = hi, fill = name, colour = NULL),
-    #             alpha = 0.15, show.legend = FALSE) +
-    geom_line (data = dat_annual, lty = 2) +
+    geom_line (lwd = 1.5) +
+    geom_line (data = dat_annual, lty = 2, lwd = 1.5) +
+    xlab ("Year") +
     ylab ("Number authors / contributors") +
-    ggtitle ("B: Num aut / ctb") +
-    theme (legend.title = element_blank(),
-           legend.position = c (0.2, 0.4),
-           legend.background = element_rect(fill='transparent', colour='transparent'))
+    theme (
+        text = element_text (size = 20),
+        legend.title = element_blank (),
+        legend.position = c (0.2, 0.4),
+        legend.background = element_rect(fill='transparent', colour=NA),
+        panel.background = element_rect(fill='transparent'),
+        plot.background = element_rect(fill='transparent', color=NA),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        legend.box.background = element_rect(fill='transparent', colour=NA)
+    )
+ggsave (fig03_png, p3, bg = "transparent", width = 10, height = 7)
+```
 
+```{r fig4-make, eval = !file.exists (fig04_png)}
 dat_urls <- readRDS (f_fig1_urls)
 dat_urls$what <- ifelse (grepl ("git", dat_urls$type), "git", "all")
 dat_urls_annual <- dat_urls [grep ("annual", dat_urls$type), ]
