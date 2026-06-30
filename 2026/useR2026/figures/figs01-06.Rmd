@@ -17,6 +17,7 @@ calc_fig1_pkg_subs <- !file.exists (f_fig1_pkg_subs)
 
 f_fig1_urls <- file.path (v_data_dir, "fig01-urls.Rds")
 calc_fig1_urls <- !file.exists (f_fig1_urls)
+f_fig2_top10 <- file.path (v_data_dir, "fig02-top10.Rds")
 
 f_fig1_aut_ctb <- file.path (v_data_dir, "fig01-aut-ctb.Rds")
 calc_fig3_aut_ctb <- !file.exists (f_fig1_aut_ctb)
@@ -26,6 +27,7 @@ fig02_png <- file.path (here, "img", "fig02.png")
 fig03_png <- file.path (here, "img", "fig03.png")
 fig04_png <- file.path (here, "img", "fig04.png")
 fig05_png <- file.path (here, "img", "fig05.png")
+fig06_png <- file.path (here, "img", "fig06.png")
 calc_fig3_aut_ctb <- calc_fig3_aut_ctb & !file.exists (fig03_png)
 ```
 
@@ -132,6 +134,35 @@ xy_git <- rbind (
 saveRDS (rbind (xy, xy_git), f_fig1_urls)
 ```
 
+```{r fig2_top10_data, eval = fig2_calc_top10_data}
+x <- load_pkgstats_data (datafile, raw = TRUE, latest = FALSE)
+x <- lapply (split (x, f = as.factor (x$year)), function (i) {
+    urls <- unlist (strsplit (i$urls, ",|;|\\n|\\s"))
+    urls <- grep ("^http", urls, value = TRUE)
+    urls <- gsub ("^(\\s*?)http(s?)\\:\\/\\/", "", urls [!is.na (urls)])
+    urls <- table (gsub ("\\/.*$", "", urls))
+    urls <- sort (urls, decreasing = TRUE)
+    data.frame (year = rep (i$year [1], length (urls)),
+        url = names (urls),
+        n = as.integer (urls))
+})
+x <- do.call (rbind, x)
+x <- x [which (!x$url == ""), ]
+rownames (x) <- NULL
+x$year <- lubridate::year (paste0 (x$year, "-01-01"))
+
+top10 <- x |>
+    group_by (url) |>
+    summarise (n = sum (n)) |>
+    arrange (desc (n))
+top10 <- top10 [-grep ("^(cran|www\\.r-project)", top10$url), ]
+
+x_top10 <- x [which (x$url %in% top10$url [1:10]), ]
+x_top10$n [x_top10$url == "github.com"] <-
+    x_top10$n [x_top10$url == "github.com"] / 20
+
+saveRDS (x_top10, f_fig2_top10)
+```
 
 ```{r fig1-aut-ctb, eval = calc_fig1_aut_ctb}
 x <- load_pkgstats_data (datafile, raw = TRUE, latest = FALSE)
@@ -315,4 +346,47 @@ p5 <- p4 +
               arrow = arrow (length = unit (0.3, "cm"), type = "closed"),
               curvature = 0.25)
 ggsave (fig05_png, p5, bg = "transparent", width = 10, height = 7)
+
 ```
+
+```{r}
+dat <- readRDS (f_fig2_top10) |>
+  mutate(
+    url = url |>
+        recode_values (
+            "github.com" ~ "GitHub (÷20)",
+            "gitlab.com" ~ "GitLab",
+            "dirk.eddelbuettel.com" ~ "dirk.edelbuettel",
+            "docs.ropensci.org" ~ "rOpenSci",
+            "r-forge.r-project.org" ~ "R-forge",
+            "doi.org" ~ "doi.org",
+            "CRAN.R-project.org" ~ "CRAN",
+            "bitbucket.org" ~ "Bitbucket",
+            "sites.google.com" ~ "Google",
+            "arxiv.org" ~ "ArXiv"
+        )
+  )
+levels <- dat |>
+    group_by (url) |>
+    slice_max (n) |>
+    arrange (desc (n))
+dat$url <- factor (dat$url, levels = levels$url)
+dat |>
+    ggplot (aes (x = year, y = n, color = url)) +
+    geom_line (lwd = 1.2) +
+    xlab ("Year") +
+    ylab ("Count") +
+    guides (color = guide_legend (ncol = 2)) +
+    theme (
+        text = element_text (size = 20),
+        legend.title = element_blank (),
+        legend.position = c (0.32, 0.78),
+        legend.background = element_rect(fill='transparent', colour=NA),
+        panel.background = element_rect(fill='transparent'),
+        plot.background = element_rect(fill='transparent', color=NA),
+        panel.grid.major = element_line(colour = "gray70", linetype = 2),
+        legend.box.background = element_rect(fill='transparent', colour=NA)
+    ) -> p6
+ggsave (fig06_png, p6, bg = "transparent", width = 10, height = 7)
+```
+
