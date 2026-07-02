@@ -1,0 +1,71 @@
+```{r fig6-load}
+library (pkgstatsAnalyses)
+library (dplyr, quietly = TRUE, warn.conflicts = FALSE)
+library (tidyr)
+library (ggplot2)
+library (patchwork)
+```
+
+```{r fig8-precalc}
+here <- file.path (here::here (), "2026", "useR2026")
+v_data_dir <- file.path (here, "data")
+logmean <- function (x, ...) {
+    index <- which (x > 0)
+    if (length (index) == 0L) {
+        return (NA_real_)
+    }
+    10 ^ mean (log10 (x [index]), na.rm = TRUE)
+}
+
+datafile <- file.path (here, "data-raw", "pkgstats-results.Rds")
+graph_data_file <- file.path (v_data_dir, "fig08-graph-metrics.Rds")
+graph_intern_data_file <-
+    file.path (v_data_dir, "fig08-graph-metrics-intern.Rds")
+
+fig17_png <- file.path (here, "img", "fig17.png")
+```
+
+```{r}
+dat <- readRDS (graph_data_file)
+dat_cran <- dat |> filter (what == "cran_by_year")
+dat <- dat |> filter (what == "annual")
+coeff_fig17_p1 <- max (dat$dd_in_zero) / max (dat$dd_in_mean)
+colours_fig17_p1 <- c ("vert_degree" = "red",
+    "not_imported" = "blue")
+
+coeff_fig17_p2 <- max (dat$d_mean) / max (dat$cb)
+colours_fig17_p2 <- c ("Centrality (betw.)" = "red",
+    "Centrality (degree)" = "green",
+    "Mean dist." = "blue")
+ggplot (dat, aes (x = year)) +
+    geom_line (aes (y = cb, col = "Centrality (betw.)"), lwd = 1.5) +
+    geom_line (aes (y = cd, col = "Centrality (degree)"), lwd = 1.5) +
+    geom_line (aes (y = d_mean / coeff_fig17_p2, col = "Mean dist."), lwd = 1.5) +
+    geom_line (data = dat_cran, aes (y = cb, col = "Centrality (betw.)"), lty = 2, lwd = 1.5) +
+    geom_line (
+        data = dat_cran,
+        aes (y = cd, col = "Centrality (degree)"),
+        lty = 2, lwd = 1.5) +
+    geom_line (
+        data = dat_cran,
+        aes (y = d_mean / coeff_fig17_p2, col = "Mean dist."),
+        lty = 2, lwd = 1.5) +
+    ylab ("centrality") +
+    scale_y_continuous (
+        sec.axis = sec_axis (
+            ~.*coeff_fig17_p2,
+            name = "Mean distance")) +
+    theme (
+        text = element_text (size = 20),
+        legend.title = element_blank (),
+        legend.position = c (0.8, 0.90),
+        legend.background = element_rect(fill = 'transparent', colour = NA),
+        panel.background = element_rect(fill = 'transparent'),
+        plot.background = element_rect(fill = 'transparent', color = NA),
+        panel.grid.major = element_line(colour = "gray70", linetype = 2),
+        legend.box.background = element_rect(fill = 'transparent', colour = NA)
+    ) -> p17
+ggsave (fig17_png, p17, bg = "transparent", width = 10, height = 7)
+```
+
+
