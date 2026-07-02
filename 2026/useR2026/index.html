@@ -43,12 +43,43 @@
             background: #2c7fb8;
             font-size: 1.4rem;
         }
+        .pkg-shapes .math-label {
+            position: absolute;
+            top: 125px; left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 1.6rem;
+            font-style: italic;
+            font-weight: bold;
+            color: black;
+        }
         .pkg-shapes .dep { width: 80px; height: 80px; border-radius: 50%; }
         .pkg-shapes .dep1 { top: 20px;  left: 40px;  background: #ee8721; }
         .pkg-shapes .dep2 { top: 20px;  left: 520px; background: #74a662; }
         .pkg-shapes .dep3 { top: 320px; left: 40px;  background: #b565a7; }
         .pkg-shapes .dep4 { top: 320px; left: 520px; background: #4fb3bf; }
         .pkg-arrows path.arrow { fill: none; stroke: #444; stroke-width: 4; }
+
+        .equation {
+            font-size: 2.5rem;
+            color: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .equation .frac {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            vertical-align: middle;
+        }
+        .equation .frac .num,
+        .equation .frac .denom {
+            display: block;
+            padding: 0 0.3rem;
+        }
+        .equation .frac .num { border-bottom: 2px solid black; }
         </style>
     </head>
     <body>
@@ -407,6 +438,7 @@
                         </div>
                         <div class="r-stack justify-center">
                             <div class="pkg-shapes" style="width: 640px; height: 420px;">
+                                <div class="math-label" data-id="math-label"><em>n</em><sub>a</sub> = 4</div>
                                 <div class="shape central" data-id="central">package</div>
                                 <div class="shape dep dep1" data-id="dep1"></div>
                                 <div class="shape dep dep2" data-id="dep2"></div>
@@ -419,10 +451,10 @@
                                         <path d="M0,0 L10,5 L0,10 Z" fill="#444"></path>
                                     </marker>
                                 </defs>
-                                <path class="arrow" data-id="arrow1" marker-end="url(#arrowhead)" d="M114,81 Q172,158 236,189"></path>
-                                <path class="arrow" data-id="arrow2" marker-end="url(#arrowhead)" d="M526,81 Q438,118 404,189"></path>
-                                <path class="arrow" data-id="arrow3" marker-end="url(#arrowhead)" d="M114,339 Q202,302 236,231"></path>
-                                <path class="arrow" data-id="arrow4" marker-end="url(#arrowhead)" d="M526,339 Q468,262 404,231"></path>
+                                <path class="arrow" data-id="arrow1" marker-end="url(#arrowhead)" d="M236,189 Q172,158 127,89"></path>
+                                <path class="arrow" data-id="arrow2" marker-end="url(#arrowhead)" d="M404,189 Q438,118 513,89"></path>
+                                <path class="arrow" data-id="arrow3" marker-end="url(#arrowhead)" d="M236,231 Q202,302 127,331"></path>
+                                <path class="arrow" data-id="arrow4" marker-end="url(#arrowhead)" d="M404,231 Q468,262 513,331"></path>
                             </svg>
                         </div>
                     </div>
@@ -439,6 +471,7 @@
                     </div>
                     <div class="r-stack justify-center">
                         <div class="pkg-shapes" style="width: 640px; height: 420px;">
+                            <div class="math-label" data-id="math-label"><em>n</em><sub>e</sub> = 4</div>
                             <div class="shape central" data-id="central">package</div>
                             <div class="shape dep dep1" data-id="dep1"></div>
                             <div class="shape dep dep2" data-id="dep2"></div>
@@ -451,11 +484,53 @@
                                     <path d="M0,0 L10,5 L0,10 Z" fill="#444"></path>
                                 </marker>
                             </defs>
-                            <path class="arrow" data-id="arrow1" marker-end="url(#arrowhead)" d="M236,189 Q172,158 127,89"></path>
-                            <path class="arrow" data-id="arrow2" marker-end="url(#arrowhead)" d="M404,189 Q438,118 513,89"></path>
-                            <path class="arrow" data-id="arrow3" marker-end="url(#arrowhead)" d="M236,231 Q202,302 127,331"></path>
-                            <path class="arrow" data-id="arrow4" marker-end="url(#arrowhead)" d="M404,231 Q468,262 513,331"></path>
+                            <path class="arrow" data-id="arrow1" marker-end="url(#arrowhead)" d="M114,81 Q172,158 236,189"></path>
+                            <path class="arrow" data-id="arrow2" marker-end="url(#arrowhead)" d="M526,81 Q438,118 404,189"></path>
+                            <path class="arrow" data-id="arrow3" marker-end="url(#arrowhead)" d="M114,339 Q202,302 236,231"></path>
+                            <path class="arrow" data-id="arrow4" marker-end="url(#arrowhead)" d="M526,339 Q468,262 404,231"></path>
                         </svg>
+                    </div>
+                </section>
+
+                <section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/cubes.svg", data-background-size="contain" data-background-position="5%">
+                    <div class="r-hstack justify-center">
+                        <h2 style="margin-right: 0px;">Coupling in</h2>
+                        <h2>stability</h2>
+                    </div>
+                    <div class="equation" style="margin-top: 6rem;">
+                        <em>I</em> =
+                        <span class="frac">
+                            <span class="num"><em>n</em><sub>e</sub></span>
+                            <span class="denom"><em>n</em><sub>a</sub> + <em>n</em><sub>e</sub></span>
+                        </span>
+                    </div>
+                    <div style="margin-top: 6rem;">
+                        <h4 style="text-transform: lowercase;">
+                            <em style="margin=right: 10px;">n</em>
+                            = <span style="text-transform: uppercase; margin-right: -0.5rem;">N</span>
+                            umbers of <em>function calls</em> not packages
+                        </h4>
+                    </div>
+                </section>
+
+                <section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/cubes.svg", data-background-size="contain" data-background-position="5%">
+                    <div class="r-hstack justify-center">
+                        <h2 style="margin-right: 0px;">Coupling in</h2>
+                        <h2>stability</h2>
+                    </div>
+                    <div style="margin-top: 3rem;">
+                        <ul>
+                            <li style="margin-bottom: 1rem;">More stable:</li>
+                            <ul style="margin-bottom: 3rem;">
+                                <li>Packages which are <em>used</em> by others</li>
+                                <li>Packages which don't <em>use</em> others</li>
+                            </ul>
+                            <li style="margin-bottom: 1rem;">Less stable:</li>
+                            <ul>
+                                <li>Packages which are <em>not used</em> by others</li>
+                                <li>Packages which only <em>use</em> others</li>
+                            </ul>
+                        </ul>
                     </div>
                 </section>
 
