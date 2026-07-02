@@ -1,0 +1,81 @@
+```{r fig6-load}
+library (pkgstatsAnalyses)
+library (dplyr, quietly = TRUE, warn.conflicts = FALSE)
+library (tidyr)
+library (ggplot2)
+library (patchwork)
+```
+
+```{r fig6-datafile}
+here <- file.path (here::here (), "2026", "useR2026")
+v_data_dir <- file.path (here, "data")
+datafile <- file.path (here, "data-raw", "pkgstats-results.Rds")
+fig18_png <- file.path (here, "img", "fig18.png")
+cp_dat_file <- file.path (v_data_dir, "fig06-coupling-data.Rds")
+f_cpl_rel <- file.path (here, "data-raw", "couplings_releases.Rds")
+logmean <- function (x, ...) {
+    10 ^ mean (log10 (x [which (x > 0)]), na.rm = TRUE)
+}
+```
+
+
+```{r}
+cp_dat <- readRDS (cp_dat_file) |>
+    select (-c (total_median, unique_median)) |>
+    rename (total = total_mean,
+            unique = unique_mean) |>
+    mutate (lo = total - total_se,
+            hi = total + total_se) |>
+    #pivot_longer (cols = c (total, unique)) |>
+    #rename (instability = value, type = name)
+    rename (instability = total)
+cp_dat$lty <- cp_dat$what == "annual"
+cp_dat$year <- as.integer (cp_dat$year)
+
+# Default cols from "figs01-06.Rmd":
+cols <- c ("#F8766D", "#00BA38", "#619CFF")
+
+ggplot (cp_dat, aes (x = year, y = instability, lty = what)) +
+    geom_line (col = cols [3], lwd = 1.5) +
+    xlab ("Year") +
+    ylab ("Instability") +
+    theme (
+        text = element_text (size = 20),
+        legend.position = "none",
+        legend.background = element_rect(fill = 'transparent', colour = NA),
+        panel.background = element_rect(fill = 'transparent'),
+        plot.background = element_rect(fill = 'transparent', color = NA),
+        panel.grid.major = element_line(colour = "gray70", linetype = 2),
+        legend.box.background = element_rect(fill = 'transparent', colour = NA)
+    ) -> p18a
+
+deps_p2 <- readRDS (f_cpl_rel)
+deps_p2 <- deps_p2 |>
+    group_by (seq) |>
+    summarise (instability = logmean (instability_unique, na.rm = TRUE),
+               efferent = logmean (efferent_unique, na.rm = TRUE))
+coeff_p2 <- max (deps_p2$efferent, na.rm = TRUE) / max (deps_p2$instability, na.rm = TRUE)
+colours_p2 <- c ("instability" = "#F8766D",
+                 "efferent" = "#00BFC4")
+deps_p2 |>
+    filter (seq <= 100) |>
+    ggplot (aes (x = seq, y = instability)) +
+    geom_line (col = cols [3], lwd = 1.5) +
+    xlab ("Release sequence") +
+    ylab ("Instability") +
+    theme (
+        text = element_text (size = 20),
+        legend.position = "none",
+        legend.background = element_rect(fill = 'transparent', colour = NA),
+        panel.background = element_rect(fill = 'transparent'),
+        plot.background = element_rect(fill = 'transparent', color = NA),
+        panel.grid.major = element_line(colour = "gray70", linetype = 2),
+        legend.box.background = element_rect(fill = 'transparent', colour = NA)
+    ) -> p18b
+
+p18 <- p18a + p18b +
+    plot_annotation (theme = theme (plot.background = element_rect (fill = "transparent", color = NA)))
+ggsave (fig18_png, p18, bg = "transparent", width = 12, height = 7)
+```
+
+
