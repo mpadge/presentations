@@ -119,5 +119,5 @@ x_rel |>
 
 p11 <- p11a + p11b +
     plot_annotation (theme = theme (plot.background = element_rect (fill = "transparent", color = NA)))
-ggsave (fig11_png, p11, bg = "transparent", width = 11, height = 7)
+ggsave (fig11_png, p11, bg = "transparent", width = 12, height = 7)
 ```

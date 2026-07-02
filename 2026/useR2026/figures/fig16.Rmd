@@ -60,7 +60,7 @@ ggplot (dat, aes (x = year)) +
         panel.grid.major = element_line(colour = "gray70", linetype = 2),
         legend.box.background = element_rect(fill = 'transparent', colour = NA)
     ) -> p16
-ggsave (fig16_png, p16, bg = "transparent", width = 12, height = 7)
+ggsave (fig16_png, p16, bg = "transparent", width = 10, height = 7)
 ```
 
 

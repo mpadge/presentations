@@ -13,6 +13,8 @@ logmean <- function (x, ...) {
     10 ^ mean (log10 (x [which (x > 0)]), na.rm = TRUE)
 }
 
+n_files_file <- file.path (v_data_dir, "fig03-n-files-data.Rds")
+n_files_exists <- file.exists (n_files_file)
 datafile <- file.path (here, "data-raw", "pkgstats-results.Rds")
 
 fig08_png <- file.path (here, "img", "fig08.png")
@@ -138,6 +140,6 @@ readRDS (f_fig3_pkg_level) |>
 
 p8 <- p8a + p8b +
     plot_annotation (theme = theme (plot.background = element_rect (fill = "transparent", color = NA)))
-ggsave (fig08_png, p8, bg = "transparent", width = 10, height = 7)
+ggsave (fig08_png, p8, bg = "transparent", width = 12, height = 7)
 ```
 
