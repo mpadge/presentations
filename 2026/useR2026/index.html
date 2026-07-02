@@ -68,18 +68,31 @@
             justify-content: center;
             gap: 0.5rem;
         }
-        .equation .frac {
+        .frac {
             display: inline-flex;
             flex-direction: column;
             align-items: center;
             vertical-align: middle;
         }
-        .equation .frac .num,
-        .equation .frac .denom {
+        .frac .num,
+        .frac .denom {
             display: block;
             padding: 0 0.3rem;
         }
-        .equation .frac .num { border-bottom: 2px solid black; }
+        .frac .num { border-bottom: 2px solid currentColor; }
+
+        .section-progress {
+            display: inline-flex;
+            border: 1px solid green;
+            margin-right: 25px;
+        }
+        .section-progress .sq {
+            width: 24px;
+            height: 24px;
+            border-right: 1px solid green;
+        }
+        .section-progress .sq:last-child { border-right: none; }
+        .section-progress .sq.filled { background: green; }
         </style>
     </head>
     <body>
@@ -209,6 +222,13 @@
                     </div>
                 </section>
 
+                <section>
+                    <div class="r-hstack justify-center">
+                        <div class="section-progress"><div class="sq filled"></div><div class="sq"></div><div class="sq"></div><div class="sq"></div><div class="sq"></div><div class="sq"></div><div class="sq"></div></div>
+                        <h2>Cran submissions</h2>
+                    </div>
+                </section>
+
                 <section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/cubes.svg", data-background-size="contain" data-background-position="5%">
                     <div class="r-hstack justify-center">
                         <h3>Annual</h3>
@@ -230,6 +250,13 @@
                                 <b>No significant change</b>
                             </h3>
                         </div>
+                    </div>
+                </section>
+
+                <section>
+                    <div class="r-hstack justify-center">
+                        <div class="section-progress"><div class="sq filled"></div><div class="sq filled"></div><div class="sq"></div><div class="sq"></div><div class="sq"></div><div class="sq"></div><div class="sq"></div></div>
+                        <h2>Package MetaData</h2>
                     </div>
                 </section>
 
@@ -303,7 +330,10 @@
                 </section>
 
                 <section>
-                    <h2>Package Structure and Function</h2>
+                    <div class="r-hstack justify-center">
+                        <div class="section-progress"><div class="sq filled"></div><div class="sq filled"></div><div class="sq filled"></div><div class="sq"></div><div class="sq"></div><div class="sq"></div><div class="sq"></div></div>
+                        <h2>Package Structure</h2>
+                    </div>
                 </section>
 
                 <section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/cubes.svg", data-background-size="contain" data-background-position="5%">
@@ -348,6 +378,28 @@
                     <img src="img/fig12.png" alt="Numbers of files" style="height: 550px; background: transparent;">
                 </section>
 
+                <section>
+                    <div class="r-hstack justify-center">
+                        <div class="section-progress"><div class="sq filled"></div><div class="sq filled"></div><div class="sq filled"></div><div class="sq filled"></div><div class="sq"></div><div class="sq"></div><div class="sq"></div></div>
+                        <h2>Documentation</h2>
+                    </div>
+                </section>
+
+                <section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/cubes.svg", data-background-size="contain" data-background-position="5%">
+                    <div class="r-hstack justify-center">
+                        <h3>Numbers of</h3>
+                        <h3>Files</h3>
+                    </div>
+                    <img src="img/fig08.png" alt="Numbers of files" style="height: 550px; background: transparent;">
+                </section>
+
+                <section data-background="img/cubes.svg", data-background-size="contain" data-background-position="5%">
+                    <div class="r-hstack justify-center">
+                        <div class="section-progress"><div class="sq filled"></div><div class="sq filled"></div><div class="sq filled"></div><div class="sq filled"></div><div class="sq filled"></div><div class="sq"></div><div class="sq"></div></div>
+                        <h2>Package functions</h2>
+                    </div>
+                </section>
+
                 <section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/cubes.svg", data-background-size="contain" data-background-position="5%">
                     <div class="r-hstack justify-center">
                         <h3>Function</h3>
@@ -387,7 +439,10 @@
                 </section>
 
                 <section data-background="img/cubes.svg", data-background-size="contain" data-background-position="5%">
-                    <h2>Package Dependencies and Network Structure</h2>
+                    <div class="r-hstack justify-center">
+                        <div class="section-progress"><div class="sq filled"></div><div class="sq filled"></div><div class="sq filled"></div><div class="sq filled"></div><div class="sq filled"></div><div class="sq filled"></div><div class="sq"></div></div>
+                        <h3>Package Dependencies and Network Structure</h3>
+                    </div>
                 </section>
 
                 <section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/cubes.svg", data-background-size="contain" data-background-position="5%">
@@ -422,6 +477,7 @@
 
                 <section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/cubes.svg", data-background-size="contain" data-background-position="5%">
                     <div class="r-hstack justify-center">
+                        <div class="section-progress"><div class="sq filled"></div><div class="sq filled"></div><div class="sq filled"></div><div class="sq filled"></div><div class="sq filled"></div><div class="sq filled"></div><div class="sq filled"></div></div>
                         <h2>stability</h2>
                     </div>
                 </section>
