@@ -2,10 +2,10 @@
 library(codingAlone)
 f <- fs::dir_ls (regexp = "pre-process", fixed = TRUE)
 dat <- readRDS (f)
-author_issue_densities_tbl <- dat$author_issue_densities_ctb100
 
-a <- author_issue_densities_tbl |>
+a <- dat$author_issue_densities_ctb100 |>
     dplyr::filter (popularity_stratum == "all") |>
+    dplyr::mutate (src = unname (SOURCE_DISPLAY_NAME [src])) |>
     dplyr::filter (month >= as.Date ("2021-01-01"))
 
 # Label position for each line: the month closest to 70% of the x-range
