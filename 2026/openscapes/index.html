@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+        />
+
+        <title>Ask a human first</title>
+
+        <link rel="stylesheet" href="dist/reset.css" />
+        <link rel="stylesheet" href="dist/reveal.css" />
+        <link rel="stylesheet" href="dist/theme/sky.css" />
+
+        <!-- Theme used for syntax highlighted code -->
+        <link rel="stylesheet" href="dist/plugin/highlight/monokai.css" />
+
+        <style>
+        .reveal .r-hstack h1,
+        .reveal .r-hstack h2,
+        .reveal .r-hstack h3,
+        .reveal .r-hstack h4,
+        .reveal .r-hstack h5,
+        .reveal .r-hstack h6 { margin: 0; }
+        .reveal .r-hstack h2:not(:last-child) { margin-right: 20px; }
+        .reveal .r-hstack h3:not(:last-child) { margin-right: 15px; }
+
+        .pkg-shapes { position: relative; width: 640px; height: 420px; }
+        .pkg-shapes .shape {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+        }
+        .pkg-shapes .central {
+            width: 160px; height: 70px;
+            top: 175px; left: 240px;
+            border-radius: 14px;
+            background: #2c7fb8;
+            font-size: 1.4rem;
+        }
+        .pkg-shapes .math-label {
+            position: absolute;
+            top: 125px; left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 1.6rem;
+            font-style: italic;
+            font-weight: bold;
+            color: black;
+        }
+        .pkg-shapes .dep { width: 80px; height: 80px; border-radius: 50%; }
+        .pkg-shapes .dep1 { top: 20px;  left: 40px;  background: #ee8721; }
+        .pkg-shapes .dep2 { top: 20px;  left: 520px; background: #74a662; }
+        .pkg-shapes .dep3 { top: 320px; left: 40px;  background: #b565a7; }
+        .pkg-shapes .dep4 { top: 320px; left: 520px; background: #4fb3bf; }
+        .pkg-arrows path.arrow { fill: none; stroke: #444; stroke-width: 4; }
+
+        .equation {
+            font-size: 2.5rem;
+            color: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .frac {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            vertical-align: middle;
+        }
+        .frac .num,
+        .frac .denom {
+            display: block;
+            padding: 0 0.3rem;
+        }
+        .frac .num { border-bottom: 2px solid currentColor; }
+
+        .section-progress {
+            display: inline-flex;
+            border: 1px solid green;
+            margin-right: 25px;
+        }
+        .section-progress .sq {
+            width: 24px;
+            height: 24px;
+            border-right: 1px solid green;
+        }
+        .section-progress .sq:last-child { border-right: none; }
+        .section-progress .sq.filled { background: green; }
+        </style>
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+
+                <section>
+                    <h2>Ask a human first</h2>
+
+                    <p>Mark Padgham, rOpenSci</p>
+                </section>
+
+                <section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/cubes.svg", data-background-size="contain" data-background-position="5%">
+                    <div class="r-hstack justify-center" style="margin-bottom: -2.5rem;">
+                        <a href="https://ropensci.org">
+                            <img src="img/logo-dark.svg" alt="ropensci logo" style="height: 180px; margin: 1.0rem auto 1.2rem auto; background: transparent;" class="ropensci-logo">
+                        </a>
+                    </div>
+                    <a href="https://ropensci.org">
+                        <code><b>
+                            ropensci.org
+                        </b> </code>
+                    </a> <br>
+                    <a href="https://ropensci.org">
+                        <code><b>
+                            mark@ropensci.org
+                        </b> </code>
+                    </a>
+                </section>
+
+                <section data-transition="none-out" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/cubes.svg", data-background-size="contain" data-background-position="5%">
+                    <h4>Unique Contributors per Month</h4>
+                    <img src="img/fig2-issue-authors.png" alt="Authors and popularity" style="height: 550px; background: transparent;">
+                </section>
+
+                <section data-transition="none-out" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/cubes.svg", data-background-size="contain" data-background-position="5%">
+                    <h5>Packages maintained by solo authors</h4>
+                    <img 
+                        src="img/fig3-solo-share-plot.png" 
+                        alt="Authors and popularity" 
+                        style="height: 500px; background: transparent;">
+                </section>
+
+                <section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/cubes.svg", data-background-size="contain" data-background-position="5%">
+                    <h2>pkgstats</h2>
+                    <div>
+                        <a href="https://ropensci.org">
+                            <code><b>
+                                ropensci-review-tools/askfirst
+                            </b> </code>
+                        </a>
+                    </div>
+                    <div>Search "ropensci askfirst"</div>
+                    <div>
+                        <p>
+                            Blah blah
+                        </p>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+
+        <script src="dist/reveal.js"></script>
+        <script src="dist/plugin/notes.js"></script>
+        <script src="dist/plugin/markdown.js"></script>
+        <script src="dist/plugin/highlight.js"></script>
+        <script>
+        // More info about initialization & config:
+        // - https://revealjs.com/initialization/
+        // - https://revealjs.com/config/
+        Reveal.initialize({
+            hash: true,
+
+            // Learn about plugins: https://revealjs.com/plugins/
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+        });
+        </script>
+    </body>
+</html>
