@@ -1,0 +1,111 @@
+
+```{r}
+library (rosmium)
+
+#' Extract highways within an OSM relation from a PBF file
+#'
+#' @param name Name used to prefix all output files.
+#' @param poly_id OSM id of boundary polygon, such as "r271202".
+#' @param pbf Path to PBF file containing the polygon and surrounding data.
+#' @return Path to the `<name>-hw.osm` file.
+extract_hw <- function (name, poly_id, pbf) {
+
+    stopifnot (file.exists (pbf))
+
+    out_p <- paste0 (name, "-poly.pbf")
+    out_j <- paste0 (name, "-poly.json")
+    out_poly <- paste0 (name, "-boundary.geojson")
+    out <- paste0 (name, ".pbf")
+    out_hw <- paste0 (name, "-hw.osm")
+    for (o in c (out_p, out_j, out, out_hw)) if (file.exists (o)) file.remove (o)
+
+    poly_json <- osmium_getid (pbf, output = out_p, ids = poly_id, add_referenced = TRUE) |>
+        osmium_export (out_j)
+
+    p <- sf::st_read (poly_json)
+    p <- p [grep ("POLYGON", sf::st_geometry_type (p)), ]
+    sf::st_write (p, out_poly, delete_dsn = file.exists (out_poly))
+
+    osmium_extract (pbf, output = out, polygon = out_poly) |>
+        osmium_tags_filter (output = out_hw, expressions = "w/highway")
+
+    file.remove (out)
+
+    return (out_hw)
+}
+
+pbf <- "/home/smexus/Downloads/zuid-holland-261018.osm.pbf"
+out_delft <- extract_hw ("delft", "r271202", pbf)
+pbf <- "/home/smexus/Downloads/finland-261018.osm.pbf"
+out_helsinki <- extract_hw ("helsinki", "r34914", pbf)
+```
+
+```{r}
+extract_hw_speeds <- function (name) {
+
+    out_hw <- paste0 (name, "-hw.osm")
+    q <- osmdata::opq (name) |>
+        osmdata::add_osm_feature (key = "highway")
+    dat <- osmdata::osmdata_sf (q, doc = out_hw)
+    hw <- dat$osm_lines |>
+        dplyr::select (osm_id, dplyr::contains ("maxspeed"), geometry)
+    hw$maxspeed <- as.numeric (hw$maxspeed)
+    hw$maxspeed [which (is.na (hw$maxspeed))] <- 30
+    hw$length <- sf::st_length (hw) |> unclass () |> round ()
+
+    return (hw)
+}
+hw_delft <- extract_hw_speeds ("delft")
+hw_helsinki <- extract_hw_speeds ("helsinki")
+```
+
+```{r}
+library (ggplot2)
+hw <- hw_delft
+g <- ggplot (hw, aes (x = maxspeed, weight = length)) +
+    geom_histogram (bins = 7, fill = "steelblue", colour = "white") +
+    geom_vline (xintercept = 30, colour = "red", linetype = "dashed", lwd = 2) +
+    scale_y_log10 () +
+    labs (x = "Max. speed", y = "Total length (m)") +
+    theme_minimal (base_size = 20) +
+    theme (
+        plot.background = element_rect (fill = "transparent", colour = NA),
+        panel.background = element_rect (fill = "transparent", colour = NA)
+    )
+ggsave (filename = "img/delft-speeds.png", g, width = 12, bg = "transparent")
+```
+
+
+```{r}
+library (mapdeck)
+hw <- hw_delft
+# Bin speeds into a few classes, with one colour and width per class
+labs <- c ("≤ 30", "31–50", "51–100", "> 100")
+hw$class <- cut (
+    hw$maxspeed,
+    breaks = c (-Inf, 30, 50, 100, Inf),
+    labels = labs
+)
+cols <- rev (colourvalues::colour_values (seq_along (labs), palette = "plasma"))
+cols [1] <- "#F8C61EFF" # slightly darker, more orange than plasma's yellow
+hw$colour <- cols [as.integer (hw$class)]
+hw$width <- c (2, 3, 5, 8) [as.integer (hw$class)] * 5
+
+legend <- mapdeck_legend (
+    legend_element (
+        variables = labs,
+        colours = cols,
+        colour_type = "stroke",
+        variable_type = "category",
+        title = "Max. speed (km/h)"
+    )
+)
+
+mapdeck (hw, style = mapdeck_style ("light")) |>
+    add_path (
+        stroke_colour = "colour",
+        stroke_width = "width",
+        legend = legend
+    )
+```
+
