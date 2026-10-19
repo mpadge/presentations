@@ -83,6 +83,13 @@
 
         .reveal .slides > section.top-slide { top: 0 !important; height: 100%; }
 
+        .reveal .slides > section.centred-slide.present {
+            display: flex !important;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .centred-slide h2:not(:first-child) { margin-top: 3rem; }
+
         .section-progress {
             display: inline-flex;
             border: 1px solid green;
@@ -105,6 +112,33 @@
                     <h1>Cities as stories</h1>
 
                     <p>Mark Padgham<br>rOpenSci & UrbanAnalyst</p>
+                </section>
+
+                <section class="top-slide" data-auto-animatedata-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/osm-delft.png", data-background-size="fill" data-background-position="5%">
+                </section>
+
+                <section class="top-slide" data-auto-animatedata-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/osm-helsinki.png", data-background-size="fill" data-background-position="5%">
+                </section>
+
+                <section class="top-slide" data-auto-animatedata-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/helsinki-zero.png", data-background-size="contain" data-background-position="5%">
+                </section>
+
+                <section class="top-slide centred-slide" data-auto-animatedata-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <h2>Helsinki</h2>
+                    <ul>
+                        <li>Road deaths (2025): 0</li>
+                        <li>Most roads max 30km/hr</li>
+                    </ul>
+
+                    <h2>Delft</h2>
+                    <ul>
+                        <li>Road deaths (2025): ? but 759 in NL, so > 0</li>
+                        <li>Most roads max speed: ?</li>
+                    </ul>
+                </section>
+
+                <section class="top-slide centred-slide" data-auto-animatedata-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <img src="img/delft-speeds.png" alt="hw speeds in delft" style="height: 550px; background: transparent;">
                 </section>
 
                 <section class="top-slide" data-auto-animatedata-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/UA-paris.png", data-background-size="fill" data-background-position="5%">
