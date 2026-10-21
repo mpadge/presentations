@@ -83,12 +83,13 @@
 
         .reveal .slides > section.top-slide { top: 0 !important; height: 100%; }
 
-        .reveal .slides > section.centred-slide.present {
+        .reveal .slides > section.centered-slide.present {
             display: flex !important;
             flex-direction: column;
             justify-content: center;
         }
-        .centred-slide h2:not(:first-child) { margin-top: 3rem; }
+        .centered-slide h2:not(:first-child) { margin-top: 3rem; }
+        .reveal table.centered-cells td { text-align: center; }
 
         .section-progress {
             display: inline-flex;
@@ -220,6 +221,279 @@
                             <h2 style="color: black; margin: 0;">Urban Analyst</h2>
                         </a>
                     </div>
+                    <div class="fragment" style="margin-top: 6em;">
+                        <ul>
+                            <li><h3>Input data</h3></li>
+                            <li><h3>Processing & Algorithms</h3></li>
+                            <li><h3><s>Output data</s></h3></li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <div class="r-vstack">
+                        <h1>Spatial</h1>
+                        <h1>Data</h1>
+                    </div>
+                    <div class="fragment">
+                        <h2>Vector, not raster</h2>
+                    </div>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <div class="r-vstack">
+                        <h1><s>Spatial</s></h1>
+                        <h1>Tabular</h1>
+                        <h1>Data</h1>
+                    </div>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <div class="r-vstack">
+                        <h1>Tabular</h1>
+                        <h1>Data</h1>
+                    </div>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                        <div class="r-hstack" style="gap: 1em;">
+                            <h1>Tabular</h1>
+                            <h1>Data</h1>
+                        </div>
+                        <div class="r-hstack" style="gap: 2em;">
+                        <table data-id="table-1", class="centered-cells">
+                            <thead><tr><th>x</th><th>y</th><th>colour</th></tr></thead>
+                            <tbody>
+                                <tr><td>0</td><td>0</td><td></td></tr>
+                                <tr><td>0</td><td>1</td><td>red</td></tr>
+                                <tr><td>1</td><td>1</td><td></td></tr>
+                                <tr><td>1</td><td>1</td><td>red</td></tr>
+                                <tr><td>2</td><td>1</td><td>green</td></tr>
+                                <tr><td>2</td><td>2</td><td> </td></tr>
+                            </tbody>
+                        </table>
+                        </div>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <div class="r-hstack" style="gap: 1em;">
+                        <h1>Tabular</h1>
+                        <h1>Data</h1>
+                    </div>
+                    <div class="r-hstack" style="gap: 2em;">
+                        <div style="position: relative;">
+                            <table data-id="table-2" class="centered-cells">
+                                <thead><tr><th>x</th><th>y</th><th>colour</th><th>shape</th></tr></thead>
+                                <tbody>
+                                    <tr><td>0</td><td>0</td><td></td><td></td></tr>
+                                    <tr><td>0</td><td>1</td><td>red</td><td>square</td></tr>
+                                    <tr><td>1</td><td>1</td><td></td><td>circle</td></tr>
+                                    <tr><td>1</td><td>1</td><td>red</td><td></td></tr>
+                                    <tr><td>2</td><td>1</td><td>green</td><td></td></tr>
+                                    <tr><td>2</td><td>2</td><td> </td><td></td></tr>
+                                </tbody>
+                            </table>
+                            <div class="fragment">
+                                <div style="position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 1fr; align-items: center; justify-items: center; color:#ee8721; font-size: 7rem;">
+                                    <b style="display: inline-block; transform: translateX(-1.5rem) rotate(-90deg);">full</b>
+                                    <b style="display: inline-block; transform: translateX(-6rem) rotate(-90deg);">empty</b>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <div class="r-hstack" style="gap: 1em;">
+                        <h1>Tabular</h1>
+                        <h1>Data</h1>
+                    </div>
+                    <div class="r-hstack" style="gap: 0.3em;">
+                        <h2>are</h2>
+                        <h2>mostly empty</h2>
+                    </div>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <div class="r-hstack" style="gap: 1em;">
+                        <h1>Tabular</h1>
+                        <h1>Data</h1>
+                    </div>
+                    <div class="r-hstack" style="gap: 0.3em;">
+                        <h2>are</h2>
+                        <h2>inefficient</h2>
+                    </div>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <div class="r-hstack" style="gap: 1em;">
+                        <h1>Tabular</h1>
+                        <h1>Data</h1>
+                    </div>
+                    <div style="position: relative;">
+                        <table data-id="table-2" class="centered-cells">
+                            <thead><tr><th>x</th><th>y</th><th>colour</th><th>shape</th></tr></thead>
+                            <tbody>
+                                <tr><td>0</td><td>0</td><td></td><td></td></tr>
+                                <tr><td>0</td><td>1</td><td>red</td><td>square</td></tr>
+                                <tr><td>1</td><td>1</td><td></td><td>circle</td></tr>
+                                <tr><td>1</td><td>1</td><td>red</td><td></td></tr>
+                                <tr><td>2</td><td>1</td><td>green</td><td></td></tr>
+                                <tr><td>2</td><td>2</td><td> </td><td></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <div class="r-hstack" style="gap: 1em;">
+                        <h1>Tabular</h1>
+                        <h1>Data</h1>
+                    </div>
+                    <div style="position: relative;">
+                        <table data-id="table-2" class="centered-cells">
+                            <thead><tr><th>key</th><th>x</th><th>y</th><th>colour</th><th>shape</th></tr></thead>
+                            <tbody>
+                                <tr><td>0</td><td>0</td><td>0</td><td></td><td></td></tr>
+                                <tr><td>1</td><td>0</td><td>1</td><td>red</td><td>square</td></tr>
+                                <tr><td>2</td><td>1</td><td>1</td><td></td><td>circle</td></tr>
+                                <tr><td>3</td><td>1</td><td>1</td><td>red</td><td></td></tr>
+                                <tr><td>4</td><td>2</td><td>1</td><td>green</td><td></td></tr>
+                                <tr><td>5</td><td>2</td><td>2</td><td> </td><td></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <div class="r-hstack" style="gap: 1em;">
+                        <h1>Tabular</h1>
+                        <h1>Data</h1>
+                    </div>
+                    <div class="r-hstack" style="gap: 2em;">
+                        <table data-id="table-2" class="centered-cells">
+                            <thead><tr><th>key</th><th>x</th><th>y</th></tr></thead>
+                            <tbody>
+                                <tr><td>0</td><td>0</td><td>0</td></tr>
+                                <tr><td>1</td><td>0</td><td>1</td></tr>
+                                <tr><td>2</td><td>1</td><td>1</td></tr>
+                                <tr><td>3</td><td>1</td><td>1</td></tr>
+                                <tr><td>4</td><td>2</td><td>1</td></tr>
+                                <tr><td>5</td><td>2</td><td>2</td></tr>
+                            </tbody>
+                        </table>
+                        <div class="r-vstack" style="gap: 0em;">
+                            <table data-id="table-4" class="centered-cells">
+                                <thead><tr><th>key</th><th>colour</th></tr></thead>
+                                <tbody>
+                                    <tr><td>1</td><td>red</td></tr>
+                                    <tr><td>3</td><td>red</td></tr>
+                                    <tr><td>4</td><td>green</td></tr>
+                                </tbody>
+                            </table>
+                            <table data-id="table-5">
+                                <thead><tr><th>colour</th><th>properties</th></tr></thead>
+                                <tbody>
+                                    <tr><td>red</td><td>Goes fast</td></tr>
+                                    <tr><td>green</td><td>Helps people relax</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <div class="r-hstack" style="gap: 1em;">
+                        <h1>Tabular</h1>
+                        <h1>Data</h1>
+                    </div>
+                    <div class="r-hstack" style="gap: 2em;">
+                        <table data-id="table-2" class="centered-cells">
+                            <thead><tr><th>key</th><th>x</th><th>y</th></tr></thead>
+                            <tbody>
+                                <tr><td>0</td><td>0</td><td>0</td></tr>
+                                <tr><td>1</td><td>0</td><td>1</td></tr>
+                                <tr><td>2</td><td>1</td><td>1</td></tr>
+                                <tr><td>3</td><td>1</td><td>1</td></tr>
+                                <tr><td>4</td><td>2</td><td>1</td></tr>
+                                <tr><td>5</td><td>2</td><td>2</td></tr>
+                            </tbody>
+                        </table>
+                        <div class="r-vstack" style="gap: 0em;">
+                            <table data-id="table-4" class="centered-cells">
+                                <thead><tr><th>key</th><th>shape</th></tr></thead>
+                                <tbody>
+                                    <tr><td>1</td><td>square</td></tr>
+                                    <tr><td>2</td><td>circle</td></tr>
+                                </tbody>
+                            </table>
+                            <table data-id="table-5">
+                                <thead><tr><th>shape</th><th>properties</th></tr></thead>
+                                <tbody>
+                                    <tr><td>square</td><td>Pointy and hurts</td></tr>
+                                    <tr><td>circle</td><td>Bounces well</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <div class="r-vstack">
+                        <h1>Multi</h1>
+                        <h1>Tabular</h1>
+                        <h1>Data</h1>
+                    </div>
+                    <div class="fragment">
+                        <div class="r-hstack" style="gap: 0.5em">
+                            <h2>Are</h2>
+                            <h2>more efficient</h2>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <div class="r-vstack">
+                        <h1>Multi</h1>
+                        <h1>Tabular</h1>
+                        <h1>Data</h1>
+                    </div>
+                    <div class="r-hstack" style="gap: 0.5em">
+                        <h2>Are</h2>
+                        <h2>relational</h2>
+                    </div>
+                </section>
+
+                <section class="top-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/delft-speeds-map.png", data-background-size="contain" data-background-position="center">
+                    <div style="margin-top: 3em;">
+                        <h2>What to do first?</h2>
+                    </div>
+                    <div class="r-hstack">
+                        <h3>End result</h3>
+                        <h3>depends on </h3>
+                    </div>
+                    <ul>
+                        <li><h3>How</h3></li>
+                        <li><h3>Where</h3></li>
+                        <li><h3>When</h3></li>
+                    </ul>
+                </section>
+
+                <section class="top-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/osmdata-main-page.png", data-background-size="fill" data-background-position="5%">
+                        <a href="https://docs.ropensci.org/osmdata/" target="_blank" rel="noopener" style="display: block; width: 100%; height: 100%;">
+                        </a>
+                </section>
+
+                <section class="top-slide centred-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <h3>Community activity in open-source software</h3>
+                    <img src="img/community-size.png" alt="community activity in open-source software" style="height: 550px; background: transparent;">
+                </section>
+
+                <section class="top-slide centred-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <h4>Community activity in open-source software</h4>
+                    <ul>
+                        <li><h4>When you code with an AI, you don't code with people</h4></li>
+                    </ul>
                 </section>
 
             </div>
