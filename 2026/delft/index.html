@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+        />
+
+        <title>Cities as stories</title>
+
+        <link rel="stylesheet" href="dist/reset.css" />
+        <link rel="stylesheet" href="dist/reveal.css" />
+        <link rel="stylesheet" href="dist/theme/sky.css" />
+
+        <!-- Theme used for syntax highlighted code -->
+        <link rel="stylesheet" href="dist/plugin/highlight/github-light.css" />
+
+        <style>
+        .reveal .r-hstack h1,
+        .reveal .r-hstack h2,
+        .reveal .r-hstack h3,
+        .reveal .r-hstack h4,
+        .reveal .r-hstack h5,
+        .reveal .r-hstack h6 { margin: 0; }
+        .reveal .r-hstack h2:not(:last-child) { margin-right: 20px; }
+        .reveal .r-hstack h3:not(:last-child) { margin-right: 15px; }
+
+        .pkg-shapes { position: relative; width: 640px; height: 420px; }
+        .pkg-shapes .shape {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+        }
+        .pkg-shapes .central {
+            width: 160px; height: 70px;
+            top: 175px; left: 240px;
+            border-radius: 14px;
+            background: #2c7fb8;
+            font-size: 1.4rem;
+        }
+        .pkg-shapes .math-label {
+            position: absolute;
+            top: 125px; left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 1.6rem;
+            font-style: italic;
+            font-weight: bold;
+            color: black;
+        }
+        .pkg-shapes .dep { width: 80px; height: 80px; border-radius: 50%; }
+        .pkg-shapes .dep1 { top: 20px;  left: 40px;  background: #ee8721; }
+        .pkg-shapes .dep2 { top: 20px;  left: 520px; background: #74a662; }
+        .pkg-shapes .dep3 { top: 320px; left: 40px;  background: #b565a7; }
+        .pkg-shapes .dep4 { top: 320px; left: 520px; background: #4fb3bf; }
+        .pkg-arrows path.arrow { fill: none; stroke: #444; stroke-width: 4; }
+
+        .equation {
+            font-size: 2.5rem;
+            color: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .frac {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            vertical-align: middle;
+        }
+        .frac .num,
+        .frac .denom {
+            display: block;
+            padding: 0 0.3rem;
+        }
+        .frac .num { border-bottom: 2px solid currentColor; }
+
+        .reveal .slides > section.top-slide { top: 0 !important; height: 100%; }
+
+        .reveal .slides > section.centered-slide.present {
+            display: flex !important;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .centered-slide h2:not(:first-child) { margin-top: 3rem; }
+        .reveal table.centered-cells td { text-align: center; }
+
+        .section-progress {
+            display: inline-flex;
+            border: 1px solid green;
+            margin-right: 25px;
+        }
+        .section-progress .sq {
+            width: 24px;
+            height: 24px;
+            border-right: 1px solid green;
+        }
+        .section-progress .sq:last-child { border-right: none; }
+        .section-progress .sq.filled { background: green; }
+        </style>
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+
+                <section>
+                    <h1>Cities as stories</h1>
+
+                    <p>Mark Padgham<br>rOpenSci & UrbanAnalyst</p>
+                </section>
+
+                <section class="top-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/osm-delft.png", data-background-size="fill" data-background-position="5%">
+                </section>
+
+                <section class="top-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/osm-helsinki.png", data-background-size="fill" data-background-position="5%">
+                </section>
+
+                <section class="top-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/helsinki-zero.png", data-background-size="contain" data-background-position="5%">
+                </section>
+
+                <section class="top-slide centred-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <h2>Helsinki</h2>
+                    <ul>
+                        <li>Road deaths (2025): 0</li>
+                        <li><em>All</em> roads max 30km/hr</li>
+                    </ul>
+
+                    <h2>Delft</h2>
+                    <ul>
+                        <li>Road deaths (2025): ? but 759 in NL, so > 0</li>
+                        <li>Most roads max speed: ?</li>
+                    </ul>
+                </section>
+
+                <section class="top-slide centred-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <h4>Highway speed distribution in Delft (Oct 2026)</h4>
+                    <img src="img/delft-speeds.png" alt="hw speeds in delft" style="height: 550px; background: transparent;">
+                </section>
+
+                <section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <div class="r-hstack justify-center">
+                        <h3>How can </h3>
+                        <h3>Delft</h3>
+                        <h3>reduce speeds?</h3>
+                    </div>
+                </section>
+
+                <section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <div class="r-hstack justify-center">
+                        <h3>Where can </h3>
+                        <h3>Delft</h3>
+                        <h3>reduce speeds?</h3>
+                    </div>
+                </section>
+
+                <section class="top-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/delft-speeds-map.png", data-background-size="contain" data-background-position="center">
+                    <div class="r-hstack justify-center">
+                        <h3>Where can </h3>
+                        <h3>Delft</h3>
+                        <h3>reduce speeds?</h3>
+                    </div>
+                    <div class="fragment" style="margin-top: 3em;">
+                        <ul>
+                            <li><h2>Where?</h2></li>
+                            <li><h2>When?</h2></li>
+                            <li><h2>Which order?</h2></li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="top-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/delft-speeds-map.png", data-background-size="contain" data-background-position="center">
+                    <div class="r-hstack justify-center">
+                        <h3>Where can </h3>
+                        <h3>Delft</h3>
+                        <h3>reduce speeds?</h3>
+                    </div>
+                    <div style="margin-top: 3em;">
+                        <h2>What to do first?</h2>
+                    </div>
+                </section>
+
+                <section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <div style="margin-top: 3em;">
+                        <h2>What to do first?</h2>
+                    </div>
+                    <div class="r-hstack">
+                        <h3>End result</h3>
+                        <h3>depends on </h3>
+                    </div>
+                    <ul>
+                        <li><h3>How</h3></li>
+                        <li><h3>Where</h3></li>
+                        <li><h3>When</h3></li>
+                    </ul>
+                </section>
+
+                <section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <div style="margin-top: 3em;">
+                        <h2>What to do first?</h2>
+                    </div>
+                    <div class="r-hstack">
+                        <h3>End result</h3>
+                        <h3><s>depends on</s></h3>
+                    </div>
+                    <h3>is a story</h3>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <div class="r-hstack justify-center" style="gap: 4rem;">
+                        <div class="r-vstack">
+                            <h4>where only</h4>
+                            <img src="img/story-left.svg" alt="Story: disconnected edges" style="width: 450px; background: transparent;">
+                        </div>
+                        <div class="r-vstack">
+                            <h4>where, when, & how</h4>
+                            <img src="img/story-right.svg" alt="Story: completed paths" style="width: 450px; background: transparent;">
+                        </div>
+                    </div>
+                </section>
+
+                <section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                        <h2>How can<br>Delft<br>learn from<br>Helsinki?</h2>
+                </section>
+
+                <section class="top-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/UA-paris.png", data-background-size="fill" data-background-position="5%">
+                    <div class="justify-right" style="position: absolute; top: 50px; right: 0; text-align: right;">
+                        <a href="https://www.urbananalyst.city/map?city=paris&layer=transport&layer2=transport&numLayers=Single" target="_blank" rel="noopener" style="color: black;">
+                            <h2 style="color: black; margin: 0;">Urban Analyst</h2>
+                        </a>
+                    </div>
+                    <div class="fragment" style="margin-top: 6em;">
+                        <ul>
+                            <li><h3>Input data</h3></li>
+                            <li><h3>Processing & Algorithms</h3></li>
+                            <li><h3><s>Output data</s></h3></li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <div class="r-vstack">
+                        <h1>Spatial</h1>
+                        <h1>Data</h1>
+                    </div>
+                    <div class="fragment">
+                        <h2>Vector, not raster</h2>
+                    </div>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <div class="r-vstack">
+                        <h1><s>Spatial</s></h1>
+                        <h1>Tabular</h1>
+                        <h1>Data</h1>
+                    </div>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <div class="r-vstack">
+                        <h1>Tabular</h1>
+                        <h1>Data</h1>
+                    </div>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                        <div class="r-hstack" style="gap: 1em;">
+                            <h1>Tabular</h1>
+                            <h1>Data</h1>
+                        </div>
+                        <div class="r-hstack" style="gap: 2em;">
+                        <table data-id="table-1", class="centered-cells">
+                            <thead><tr><th>x</th><th>y</th><th>colour</th></tr></thead>
+                            <tbody>
+                                <tr><td>0</td><td>0</td><td></td></tr>
+                                <tr><td>0</td><td>1</td><td>red</td></tr>
+                                <tr><td>1</td><td>1</td><td></td></tr>
+                                <tr><td>1</td><td>1</td><td>red</td></tr>
+                                <tr><td>2</td><td>1</td><td>green</td></tr>
+                                <tr><td>2</td><td>2</td><td> </td></tr>
+                            </tbody>
+                        </table>
+                        </div>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <div class="r-hstack" style="gap: 1em;">
+                        <h1>Tabular</h1>
+                        <h1>Data</h1>
+                    </div>
+                    <div class="r-hstack" style="gap: 2em;">
+                        <div style="position: relative;">
+                            <table data-id="table-2" class="centered-cells">
+                                <thead><tr><th>x</th><th>y</th><th>colour</th><th>shape</th></tr></thead>
+                                <tbody>
+                                    <tr><td>0</td><td>0</td><td></td><td></td></tr>
+                                    <tr><td>0</td><td>1</td><td>red</td><td>square</td></tr>
+                                    <tr><td>1</td><td>1</td><td></td><td>circle</td></tr>
+                                    <tr><td>1</td><td>1</td><td>red</td><td></td></tr>
+                                    <tr><td>2</td><td>1</td><td>green</td><td></td></tr>
+                                    <tr><td>2</td><td>2</td><td> </td><td></td></tr>
+                                </tbody>
+                            </table>
+                            <div class="fragment">
+                                <div style="position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 1fr; align-items: center; justify-items: center; color:#ee8721; font-size: 7rem;">
+                                    <b style="display: inline-block; transform: translateX(-1.5rem) rotate(-90deg);">full</b>
+                                    <b style="display: inline-block; transform: translateX(-6rem) rotate(-90deg);">empty</b>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <div class="r-hstack" style="gap: 1em;">
+                        <h1>Tabular</h1>
+                        <h1>Data</h1>
+                    </div>
+                    <div class="r-hstack" style="gap: 0.3em;">
+                        <h2>are</h2>
+                        <h2>mostly empty</h2>
+                    </div>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <div class="r-hstack" style="gap: 1em;">
+                        <h1>Tabular</h1>
+                        <h1>Data</h1>
+                    </div>
+                    <div class="r-hstack" style="gap: 0.3em;">
+                        <h2>are</h2>
+                        <h2>inefficient</h2>
+                    </div>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <div class="r-hstack" style="gap: 1em;">
+                        <h1>Tabular</h1>
+                        <h1>Data</h1>
+                    </div>
+                    <div style="position: relative;">
+                        <table data-id="table-2" class="centered-cells">
+                            <thead><tr><th>x</th><th>y</th><th>colour</th><th>shape</th></tr></thead>
+                            <tbody>
+                                <tr><td>0</td><td>0</td><td></td><td></td></tr>
+                                <tr><td>0</td><td>1</td><td>red</td><td>square</td></tr>
+                                <tr><td>1</td><td>1</td><td></td><td>circle</td></tr>
+                                <tr><td>1</td><td>1</td><td>red</td><td></td></tr>
+                                <tr><td>2</td><td>1</td><td>green</td><td></td></tr>
+                                <tr><td>2</td><td>2</td><td> </td><td></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <div class="r-hstack" style="gap: 1em;">
+                        <h1>Tabular</h1>
+                        <h1>Data</h1>
+                    </div>
+                    <div style="position: relative;">
+                        <table data-id="table-2" class="centered-cells">
+                            <thead><tr><th>key</th><th>x</th><th>y</th><th>colour</th><th>shape</th></tr></thead>
+                            <tbody>
+                                <tr><td>0</td><td>0</td><td>0</td><td></td><td></td></tr>
+                                <tr><td>1</td><td>0</td><td>1</td><td>red</td><td>square</td></tr>
+                                <tr><td>2</td><td>1</td><td>1</td><td></td><td>circle</td></tr>
+                                <tr><td>3</td><td>1</td><td>1</td><td>red</td><td></td></tr>
+                                <tr><td>4</td><td>2</td><td>1</td><td>green</td><td></td></tr>
+                                <tr><td>5</td><td>2</td><td>2</td><td> </td><td></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <div class="r-hstack" style="gap: 1em;">
+                        <h1>Tabular</h1>
+                        <h1>Data</h1>
+                    </div>
+                    <div class="r-hstack" style="gap: 2em;">
+                        <table data-id="table-2" class="centered-cells">
+                            <thead><tr><th>key</th><th>x</th><th>y</th></tr></thead>
+                            <tbody>
+                                <tr><td>0</td><td>0</td><td>0</td></tr>
+                                <tr><td>1</td><td>0</td><td>1</td></tr>
+                                <tr><td>2</td><td>1</td><td>1</td></tr>
+                                <tr><td>3</td><td>1</td><td>1</td></tr>
+                                <tr><td>4</td><td>2</td><td>1</td></tr>
+                                <tr><td>5</td><td>2</td><td>2</td></tr>
+                            </tbody>
+                        </table>
+                        <div class="r-vstack" style="gap: 0em;">
+                            <table data-id="table-4" class="centered-cells">
+                                <thead><tr><th>key</th><th>colour</th></tr></thead>
+                                <tbody>
+                                    <tr><td>1</td><td>red</td></tr>
+                                    <tr><td>3</td><td>red</td></tr>
+                                    <tr><td>4</td><td>green</td></tr>
+                                </tbody>
+                            </table>
+                            <table data-id="table-5">
+                                <thead><tr><th>colour</th><th>properties</th></tr></thead>
+                                <tbody>
+                                    <tr><td>red</td><td>Goes fast</td></tr>
+                                    <tr><td>green</td><td>Helps people relax</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <div class="r-hstack" style="gap: 1em;">
+                        <h1>Tabular</h1>
+                        <h1>Data</h1>
+                    </div>
+                    <div class="r-hstack" style="gap: 2em;">
+                        <table data-id="table-2" class="centered-cells">
+                            <thead><tr><th>key</th><th>x</th><th>y</th></tr></thead>
+                            <tbody>
+                                <tr><td>0</td><td>0</td><td>0</td></tr>
+                                <tr><td>1</td><td>0</td><td>1</td></tr>
+                                <tr><td>2</td><td>1</td><td>1</td></tr>
+                                <tr><td>3</td><td>1</td><td>1</td></tr>
+                                <tr><td>4</td><td>2</td><td>1</td></tr>
+                                <tr><td>5</td><td>2</td><td>2</td></tr>
+                            </tbody>
+                        </table>
+                        <div class="r-vstack" style="gap: 0em;">
+                            <table data-id="table-4" class="centered-cells">
+                                <thead><tr><th>key</th><th>shape</th></tr></thead>
+                                <tbody>
+                                    <tr><td>1</td><td>square</td></tr>
+                                    <tr><td>2</td><td>circle</td></tr>
+                                </tbody>
+                            </table>
+                            <table data-id="table-5">
+                                <thead><tr><th>shape</th><th>properties</th></tr></thead>
+                                <tbody>
+                                    <tr><td>square</td><td>Pointy and hurts</td></tr>
+                                    <tr><td>circle</td><td>Bounces well</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <div class="r-vstack">
+                        <h1>Multi</h1>
+                        <h1>Tabular</h1>
+                        <h1>Data</h1>
+                    </div>
+                    <div class="fragment">
+                        <div class="r-hstack" style="gap: 0.5em">
+                            <h2>Are</h2>
+                            <h2>more efficient</h2>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <div class="r-vstack">
+                        <h1>Multi</h1>
+                        <h1>Tabular</h1>
+                        <h1>Data</h1>
+                    </div>
+                    <div class="r-hstack" style="gap: 0.5em">
+                        <h2>Are</h2>
+                        <h2>relational</h2>
+                    </div>
+                </section>
+
+                <section class="top-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/delft-speeds-map.png", data-background-size="contain" data-background-position="center">
+                    <div style="margin-top: 3em;">
+                        <h2>What to do first?</h2>
+                    </div>
+                    <div class="r-hstack">
+                        <h3>End result</h3>
+                        <h3>depends on </h3>
+                    </div>
+                    <ul>
+                        <li><h3>How</h3></li>
+                        <li><h3>Where</h3></li>
+                        <li><h3>When</h3></li>
+                    </ul>
+                </section>
+
+                <section class="top-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/osmdata-main-page.png", data-background-size="fill" data-background-position="5%">
+                    <a href="https://docs.ropensci.org/osmdata/" target="_blank" rel="noopener" style="display: block; width: 100%; height: 100%;">
+                    </a>
+                </section>
+
+                <section class="top-slide centred-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <div class="r-hstack" style="gap: 0.5em">
+                        <h2>OSM</h2>
+                        <h3>data structure</h3>
+                    </div>
+                    <pre><code class="xml" data-trim style="font-size: 0.55em; max-height: none;">
+&lt;node id="25316206" version="4" timestamp="2021-09-22T14:00:34Z" lat="52.0225868" lon="4.3754719"&gt;
+  &lt;tag k="barrier" v="lift_gate"/&gt;
+&lt;/node&gt;
+
+&lt;way id="4239535" version="24" timestamp="2023-12-30T17:36:45Z"&gt;
+  &lt;nd ref="1432937786"/&gt;
+  &lt;nd ref="1432937797"/&gt;
+  ...
+  &lt;tag k="highway" v="cycleway"/&gt;
+  &lt;tag k="name" v="Bospad"/&gt;
+&lt;/way&gt;
+
+&lt;relation id="..." version="..."&gt;
+  &lt;member type="way" ref="4239535" role=""/&gt;
+  &lt;member type="way" ref="4239536" role=""/&gt;
+  ...
+  &lt;tag k="type" v="route"/&gt;
+  &lt;tag k="route" v="bicycle"/&gt;
+&lt;/relation&gt;
+                    </code></pre>
+                </section>
+
+                <section class="centred-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <div class="r-hstack" style="gap: 0.5em">
+                        <h2>OSM</h2>
+                        <h3>data structure</h3>
+                    </div>
+                    <div class="r-hstack" style="gap: 0.5em">
+                        <h3>is</h3>
+                        <h3>relational</h3>
+                    </div>
+                </section>
+
+                <section class="centred-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <div class="r-hstack" style="gap: 0.5em">
+                        <h2>OSM</h2>
+                        <h3>data structure</h3>
+                    </div>
+                    <div class="r-hstack" style="gap: 0.5em">
+                        <h3>is</h3>
+                        <h3>hierarchically</h3>
+                        <h3>relational</h3>
+                    </div>
+                </section>
+
+                <section class="top-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/silicate.png", data-background-size="fill" data-background-position="5%">
+                    <a href="https://hypertidy.github.io/silicate/" target="_blank" rel="noopener" style="display: block; width: 100%; height: 100%;">
+                    </a>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <pre><code data-trim data-noescape>
+                        library (osmdata)
+                        dat <- opq ("Delft Netherlands") |>
+                            add_osm_feature (key = "highway") |>
+                            osmdata_sc (doc = "delft-hw.osm")
+                    </code></pre>
+                    <code>osmdata_sc()</code>: Silicate format
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <pre><code class="r" data-trim data-noescape style="font-size: 0.6em; max-height: none;">
+                        names (dat)
+                        #&gt; "nodes"  "relation_members"  "relation_properties"  "object"
+                        #&gt; "object_link_edge"  "edge"  "vertex"  "meta"
+
+                        dat$vertex
+                        #&gt;      x_    y_ vertex_
+                        #&gt; 1  4.36  52.0 21702193
+                        #&gt; 2  4.36  52.0 21766435
+                        #&gt; 3  4.36  52.0 21766438
+
+                        dat$edge
+                        #&gt; # A tibble: 48,368 × 3
+                        #&gt; .vx0       .vx1       edge_
+                        #&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;
+                        #&gt; 1 1432937786 1432937797 PL7KhoEg2e
+                        #&gt; 2 1432937797 2961946231 OZaR5sC0SU
+                        #&gt; 3 2961946231 25315554   jk8s6kCjvL
+                    </code></pre>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <pre><code class="r" data-trim data-noescape style="font-size: 0.6em; max-height: none;">
+                        dat$object_link_edge
+                        #&gt; # A tibble: 48,368 × 3
+                        #&gt; edge_      object_ native_
+                        #&gt; &lt;chr&gt;      &lt;chr&gt;   &lt;lgl&gt;
+                        #&gt; 1 PL7KhoEg2e 4239535 TRUE
+                        #&gt; 2 OZaR5sC0SU 4239535 TRUE
+                        #&gt; 3 jk8s6kCjvL 4239535 TRUE
+
+                        dat$object
+                        #&gt; # A tibble: 79,385 × 3
+                        #&gt; object_ key           value
+                        #&gt; &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;
+                        #&gt; 1 4239535 foot          yes
+                        #&gt; 2 4239535 highway       cycleway
+                        #&gt; 3 4239535 lit           no
+                    </code></pre>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/UA-paris.png", data-background-size="fill" data-background-position="5%">
+                    <ul>
+                        <li><h3>Input data</h3></li>
+                        <li>
+                            <div class="r-hstack" style="gap: 0.2em">
+                                <h3>Processing &</h3>
+                                <h3>Algorithms</h3>
+                            </div>
+                        </li>
+                        <li><h3><s>Output data</s></h3></li>
+                    </ul>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/UA-paris.png", data-background-size="fill" data-background-position="5%">
+                    <ul>
+                        <li><h3><s>Input data</s></h3></li>
+                        <li>
+                            <div class="r-hstack" style="gap: 0.2em">
+                                <h3>Processing &</h3>
+                                <h3>Algorithms</h3>
+                            </div>
+                        </li>
+                        <li><h3><s>Output data</s></h3></li>
+                    </ul>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/UA-paris.png", data-background-size="fill" data-background-position="5%">
+                    <ul>
+                        <li>
+                            <div class="r-hstack" style="gap: 0.2em">
+                                <h3>Processing &</h3>
+                                <h3>Algorithms</h3>
+                            </div>
+                        </li>
+                    </ul>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/UA-paris.png", data-background-size="fill" data-background-position="5%">
+                    <ul>
+                        <li>
+                            <div class="r-hstack" style="gap: 0.2em">
+                                <h3>Routing</h3>
+                                <h3>Algorithms</h3>
+                            </div>
+                        </li>
+                    </ul>
+                </section>
+
+                <section class="top-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/dodgr-main-page.png", data-background-size="fill" data-background-position="5%">
+                    <a href="https://urbananalyst.github.io/dodgr/" target="_blank" rel="noopener" style="display: block; width: 100%; height: 100%;">
+                    </a>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <h2>Compound Junctions</h2>
+                    <div class="r-stack justify-center">
+                        <img src="img/junction.svg" alt="Compound street junction" style="height: 550px; background: transparent;">
+                        <div class="fragment">
+                            <h3 style="transform: translateY(-16rem);">
+                                <b>require relational data</b>
+                            </h3>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/berlin.png", data-background-size="fill" data-background-position="5%">
+                    <div class="fragment">
+                        <div class="r-vstack" style="gap: 0.2em; background: rgba(255, 255, 255, 0.7); padding: 0.5em 1em; border-radius: 0.3em;">
+                            <h2>Routing is</h2>
+                            <h2>not just routing</h2>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/berlin.png", data-background-size="fill" data-background-position="5%">
+                    <div class="r-vstack" style="gap: 0.2em; background: rgba(255, 255, 255, 0.7); padding: 0.5em 1em; border-radius: 0.3em;">
+                        <h2>Routing is</h2>
+                        <h2>political</h2>
+                    </div>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/berlin.png", data-background-size="fill" data-background-position="5%">
+                    <div class="r-vstack" style="gap: 0.2em; background: rgba(255, 255, 255, 0.7); padding: 0.5em 1em; border-radius: 0.3em;">
+                        <h2>Routing is</h2>
+                        <h2>difficult</h2>
+                    </div>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <div class="r-vstack" style="gap: 0.2em">
+                        <h2>Routing is</h2>
+                        <h2>difficult</h2>
+                    </div>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <div class="r-vstack" style="gap: 0.2em">
+                        <h2>Bicycle</h2>
+                        <h2>Routing is</h2>
+                        <h2>difficult</h2>
+                    </div>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <div class="r-vstack" style="gap: 0.2em">
+                        <h2>Public</h2>
+                        <h2>transport</h2>
+                        <h2>Routing is</h2>
+                        <h2>difficult</h2>
+                    </div>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/gtfsrouter.png", data-background-size="fill" data-background-position="5%">
+                    <a href="https://urbananalyst.github.io/gtfsrouter/" target="_blank" rel="noopener" style="display: block; width: 100%; height: 100%;">
+                        <div class="r-vstack" style="background: rgba(255, 255, 255, 0.05); padding: 0.5em 1em; border-radius: 0.3em;">
+                            <h2>Public</h2>
+                            <h2>transport</h2>
+                            <h2>Routing is</h2>
+                            <h2>difficult</h2>
+                        </div>
+                    </a>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/m4ra.png", data-background-size="fill" data-background-position="5%">
+                    <a href="https://urbananalyst.github.io/m4ra/" target="_blank" rel="noopener" style="display: block; width: 100%; height: 100%;">
+                        <div class="r-vstack" style="gap: 0.2em; background: rgba(255, 255, 255, 0.7); padding: 0.5em 0.5em; border-radius: 0.3em;">
+                            <h2>Bringing it</h2>
+                            <h2>all together</h2>
+                        </div>
+                    </a>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/UA-paris.png", data-background-size="fill" data-background-position="5%">
+                    <ul>
+                        <li><h3>Input data</h3></li>
+                        <li><h3>Processing & Algorithms</h3></li>
+                        <li><h3><s>Output data</s></h3></li>
+                    </ul>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/delft-speeds-map.png", data-background-size="contain" data-background-position="center">
+                    <ul>
+                        <li><h2>Where?</h2></li>
+                        <li><h2>When?</h2></li>
+                        <li><h2>Which order?</h2></li>
+                    </ul>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/delft-speeds-map.png", data-background-size="contain" data-background-position="center">
+                    <ul>
+                        <li><h3>Where did developments happen?</h3></li>
+                        <li><h3>When did developments happen</h3></li>
+                        <li><h3>Why and how?</h3></li>
+                    </ul>
+                </section>
+
+            </div>
+        </div>
+
+        <script src="dist/reveal.js"></script>
+        <script src="dist/plugin/notes.js"></script>
+        <script src="dist/plugin/markdown.js"></script>
+        <script src="dist/plugin/highlight.js"></script>
+        <script>
+        // More info about initialization & config:
+        // - https://revealjs.com/initialization/
+        // - https://revealjs.com/config/
+        Reveal.initialize({
+            hash: true,
+
+            // Learn about plugins: https://revealjs.com/plugins/
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+        });
+        </script>
+    </body>
+</html>
