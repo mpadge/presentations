@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="dist/theme/sky.css" />
 
         <!-- Theme used for syntax highlighted code -->
-        <link rel="stylesheet" href="dist/plugin/highlight/monokai.css" />
+        <link rel="stylesheet" href="dist/plugin/highlight/github-light.css" />
 
         <style>
         .reveal .r-hstack h1,
@@ -480,8 +480,116 @@
                 </section>
 
                 <section class="top-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/osmdata-main-page.png", data-background-size="fill" data-background-position="5%">
-                        <a href="https://docs.ropensci.org/osmdata/" target="_blank" rel="noopener" style="display: block; width: 100%; height: 100%;">
-                        </a>
+                    <a href="https://docs.ropensci.org/osmdata/" target="_blank" rel="noopener" style="display: block; width: 100%; height: 100%;">
+                    </a>
+                </section>
+
+                <section class="top-slide centred-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <div class="r-hstack" style="gap: 0.5em">
+                        <h2>OSM</h2>
+                        <h3>data structure</h3>
+                    </div>
+                    <pre><code class="xml" data-trim style="font-size: 0.55em; max-height: none;">
+&lt;node id="25316206" version="4" timestamp="2021-09-22T14:00:34Z" lat="52.0225868" lon="4.3754719"&gt;
+  &lt;tag k="barrier" v="lift_gate"/&gt;
+&lt;/node&gt;
+
+&lt;way id="4239535" version="24" timestamp="2023-12-30T17:36:45Z"&gt;
+  &lt;nd ref="1432937786"/&gt;
+  &lt;nd ref="1432937797"/&gt;
+  ...
+  &lt;tag k="highway" v="cycleway"/&gt;
+  &lt;tag k="name" v="Bospad"/&gt;
+&lt;/way&gt;
+
+&lt;relation id="..." version="..."&gt;
+  &lt;member type="way" ref="4239535" role=""/&gt;
+  &lt;member type="way" ref="4239536" role=""/&gt;
+  ...
+  &lt;tag k="type" v="route"/&gt;
+  &lt;tag k="route" v="bicycle"/&gt;
+&lt;/relation&gt;
+                    </code></pre>
+                </section>
+
+                <section class="centred-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <div class="r-hstack" style="gap: 0.5em">
+                        <h2>OSM</h2>
+                        <h3>data structure</h3>
+                    </div>
+                    <div class="r-hstack" style="gap: 0.5em">
+                        <h3>is</h3>
+                        <h3>relational</h3>
+                    </div>
+                </section>
+
+                <section class="centred-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <div class="r-hstack" style="gap: 0.5em">
+                        <h2>OSM</h2>
+                        <h3>data structure</h3>
+                    </div>
+                    <div class="r-hstack" style="gap: 0.5em">
+                        <h3>is</h3>
+                        <h3>hierarchically</h3>
+                        <h3>relational</h3>
+                    </div>
+                </section>
+
+                <section class="top-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)" data-background="img/silicate.png", data-background-size="fill" data-background-position="5%">
+                    <a href="https://hypertidy.github.io/silicate/" target="_blank" rel="noopener" style="display: block; width: 100%; height: 100%;">
+                    </a>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <pre><code data-trim data-noescape>
+                        library (osmdata)
+                        dat <- opq ("Delft Netherlands") |>
+                            add_osm_feature (key = "highway") |>
+                            osmdata_sc (doc = "delft-hw.osm")
+                    </code></pre>
+                    <code>osmdata_sc()</code>: Silicate format
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <pre><code class="r" data-trim data-noescape style="font-size: 0.6em; max-height: none;">
+                        names (dat)
+                        #&lt; "nodes"  "relation_members"  "relation_properties"  "object"
+                        #&lt; "object_link_edge"  "edge"  "vertex"  "meta"
+
+                        dat$vertex
+                        #&lt;      x_    y_ vertex_
+                        #&lt; 1  4.36  52.0 21702193
+                        #&lt; 2  4.36  52.0 21766435
+                        #&lt; 3  4.36  52.0 21766438
+
+                        dat$edge
+                        #&lt; # A tibble: 48,368 × 3
+                        #&lt; .vx0       .vx1       edge_
+                        #&lt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;
+                        #&lt; 1 1432937786 1432937797 PL7KhoEg2e
+                        #&lt; 2 1432937797 2961946231 OZaR5sC0SU
+                        #&lt; 3 2961946231 25315554   jk8s6kCjvL
+                    </code></pre>
+                </section>
+
+                <section class="center-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+                    <pre><code class="r" data-trim data-noescape style="font-size: 0.6em; max-height: none;">
+                        dat$object_link_edge
+                        #&lt; # A tibble: 48,368 × 3
+                        #&lt; edge_      object_ native_
+                        #&lt; &lt;chr&gt;      &lt;chr&gt;   &lt;lgl&gt;
+                        #&lt; 1 PL7KhoEg2e 4239535 TRUE
+                        #&lt; 2 OZaR5sC0SU 4239535 TRUE
+                        #&lt; 3 jk8s6kCjvL 4239535 TRUE
+
+                        dat$object
+                        #&lt; # A tibble: 79,385 × 3
+                        #&lt; object_ key           value
+                        #&lt; &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;
+                        #&lt; 1 4239535 foot          yes
+                        #&lt; 2 4239535 highway       cycleway
+                        #&lt; 3 4239535 lit           no
+                    </code></pre>
                 </section>
 
                 <section class="top-slide centred-slide" data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
